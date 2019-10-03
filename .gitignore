@@ -1,0 +1,4 @@
+# Don't track content of these folders
+kindle_reviews.csv
+meta_Kindle_Store.json
+data.json

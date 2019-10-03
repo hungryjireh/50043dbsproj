@@ -2,3 +2,5 @@
 kindle_reviews.csv
 meta_Kindle_Store.json
 data.json
+KindleMetadata.bson
+dump.sql

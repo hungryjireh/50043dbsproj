@@ -1,0 +1,36 @@
+.marketplace-app-card-list{
+    height: 95vh;
+    overflow: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0.3rem;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    margin-right: 2rem
+}
+
+.marketplace-button-improve{
+    font-size: 14px;
+    height: 50px;
+    width: 150px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 1px 1px 0px 2px rgba (0,0,0,0.3);
+    background: lightgray;
+    cursor: pointer;
+    font-family: 'Lato';
+    font-weight: 100;
+}
+
+button:hover {
+    background-color: burlywood;
+}
+
+.limit-box{
+    height: 15rem;
+    overflow: auto
+}
+
+.marketplace{
+    padding-left: 17rem
+}

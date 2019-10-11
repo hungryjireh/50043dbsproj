@@ -1,38 +1,31 @@
-This web application is developed using Flask.
-# 50.043 Databases Project
+# Steps to run this Shit
 
-## Dependencies
+## Configuration
 
-1. PyMongo
-```
-$ pip install PyMongo
-```
+Make sure to add your own `MONGOURI` from your [mLab](http://mlab.com) database in `config/keys.js`.
 
-2. MySQL
-```
-$ pip install flask-mysqldb
+```javascript
+module.exports = {
+  mongoURI: "YOUR_MONGO_URI_HERE",
+  secretOrKey: "secret"
+};
 ```
 
-## Databases
+## Quick Start
 
-1. From shell, run:
-```
-$ mongorestore --db database_name path_to_bson_file
-```
-After downloading mongodump file (KindleMetadata.bson)
+1. `npm install`
 
-2. From shell, run:
-```
-$ mysql -u root -p dbs_proj < dump.sql
-```
-After downloading MySQL file (dump.sql)
+2. To run on localhost
 
-## Misc
-1. To dump MongoDB:
+```javascript
+// Install dependencies for server & client
+npm install && npm run client-install
+
+// Run client & server with concurrently
+npm run dev
+
+// Server runs on http://localhost:5000 and client on http://:3000
 ```
-$ mongodump --db database_name --collection collection_name
-```
-2. To dump MySQL:
-```
-$ mysqldump -u root --databases [database-name] > dump.sql
-```
+
+## To run seed file
+`node store-seed.js`

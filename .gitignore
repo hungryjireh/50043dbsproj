@@ -5,3 +5,4 @@ data.json
 KindleMetadata.bson
 dump.sql
 DBSProject.pem
+node_modules

@@ -30,6 +30,27 @@ mongoose
   .then(() => console.log("MongoDB successfully connected"))
   .catch(err => console.log(err));
 
+
+  // MySQL Database connection
+  const mysql = require("mysql");
+  const mySQLParams = require("./config/keys").mySQLParams;
+
+  app.use(function(req, res, next){
+    res.locals.mySQLConnection = mysql.createConnection({
+      host     : mySQLParams.host,
+      user     : mySQLParams.user,
+      password : mySQLParams.password,
+      database : mySQLParams.database
+    });
+    res.locals.mySQLConnection
+      .connect((err) => {
+        if (err) throw err;
+        console.log("MySQL succesfully connected"); 
+      });
+    next();
+  });  
+
+
 // Add cors
 let allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', "*");

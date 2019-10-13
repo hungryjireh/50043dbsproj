@@ -2,29 +2,17 @@
 
 ## Configuration
 
-Make sure to add your own `MONGOURI` from your [mLab](http://mlab.com) database in `config/keys.js`.
+Make sure to add your own `DEV_MONGO_DB` and `DEV_LOGS_MONGODB` from your [mLab](http://mlab.com) database in `.env` file. 
+Also ass your own `DEV_SQL_*` parameters
 
-```javascript
-module.exports = {
-  mongoURI: "YOUR_MONGO_URI_HERE",
-  secretOrKey: "secret"
-};
-```
 
 ## Quick Start
+Install [nodejs](https://nodejs.org/en/) v10+
 
-1. `npm install`
-
-2. To run on localhost
-
-```javascript
-// Install dependencies for server & client
-npm install && npm run client-install
-
-// Run client & server with concurrently
-npm run dev
-
-// Server runs on http://localhost:5000 and client on http://:3000
+Run
+```sh
+npm install
+npm run dev  # Server runs on http://localhost:5000 and client on http://localhots:3000 (brovser will automatically open)
 ```
 
 ## To run seed file

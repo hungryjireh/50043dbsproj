@@ -1,4 +1,4 @@
-# Steps to run this Shit
+# Steps to run this instance
 
 ## Configuration
 

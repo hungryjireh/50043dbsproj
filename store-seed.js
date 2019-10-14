@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 var Store = require('./models/Store')
 
 // DB Config
-const uri = require("./config/keys").mongoURI;
+const {mongodb: { uri }} = require("./server/config/config");
 
 // Connect to MongoDB
 mongoose

@@ -1,3 +1,12 @@
 export const GET_ERRORS = "GET_ERRORS";
 export const USER_LOADING = "USER_LOADING";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+
+// REVIEWS
+export const SET_USER_REVIEWS = "SET_USER_REVIEWS";
+export const SET_BOOK_REVIEWS = "SET_BOOK_REVIEWS";
+export const SET_REVIEW = "SET_REVIEW";
+
+// BOOKS
+export const SEARCH_BOOKS = "SEARCH_BOOKS";
+export const SET_BOOK_DETAIL = "SET_BOOK_DETAIL";

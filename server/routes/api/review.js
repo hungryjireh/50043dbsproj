@@ -44,5 +44,19 @@ router.get('/user/:reviewerID', (req, res, next) => { // or -> /api/user/:id/rev
     });
 });
 
+router.get('/book/:bookID', (req, res, next) => { // or -> /api/user/:id/reviews ???
+    const bookID = req.params.bookID
+    const limit = req.query.limit || 10
+    const offset = req.query.offset || 0
+
+        // find book and get all reviews
+    const query = `TODO LIMIT ${offset}, ${limit};`
+
+    SQLconnection.query(query, (error, results, fields) => {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
 
 module.exports = router;

@@ -15,4 +15,17 @@ router.get('/getbooks', (req, res, next) => {
     });
 });
 
+router.get('/book/:bookid', (req, res, next) => {
+    const bookid = req.params.bookid
+
+    // TODO
+    return null
+});
+
+router.get('/search', (req, res, next) => {
+    let querry = req.query.search
+    //TODO
+    return []
+});
+
 module.exports = router;

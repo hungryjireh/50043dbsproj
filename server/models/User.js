@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+import { mongoDBconnection } from '../config/database'
+
 
 // Create Schema
 const UserSchema = new Schema({
@@ -21,6 +23,6 @@ const UserSchema = new Schema({
   }
 });
 
-const User = mongoose.model("users", UserSchema);
+const User = mongoDBconnection.model("users", UserSchema);
 
 module.exports = User;

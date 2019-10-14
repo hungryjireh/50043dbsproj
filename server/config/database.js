@@ -1,21 +1,25 @@
 import mongoose from 'mongoose';
 import config from './config';
 
-//TODO log mongo db connection
 
-// Connect to MongoDB
+// Connect to MongoDBs
 mongoose.Promise = global.Promise;
 
-const { mongodb: { uri } } = config;
+const { mongodb, mongodbLogs } = config;
+
+const opt = { useNewUrlParser: true, useUnifiedTopology: true }
+
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 
-mongoose
-    .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log("MongoDB successfully connected"))
-    .catch(err => console.log(err));
+const mongoDBconnection = mongoose.createConnection(mongodb.uri, opt);
+const mongoDBLogsConnection = mongoose.createConnection(mongodbLogs.uri, opt);
 
-const mongoDBconnection = mongoose.connection;
+mongoDBconnection.on('connected', () => console.log("connected to main mongodb database"));
+mongoDBconnection.on('error',  (e) => console.error("error connecting to main mongodb database ->", e.message));
+
+mongoDBLogsConnection.on('connected', () => console.log("connected to main mongodb database"));
+mongoDBLogsConnection.on('error',  (e) => console.error("error connecting to log mongodb database ->", e.message));
 
 
 // MySQL Database connection
@@ -29,14 +33,5 @@ const SQLconnection = mysql.createConnection({
   database : dbName,
 });
 
-// SQLconnection.connect((err) => {
-//   if (err) {
-//     console.log("MySQL connection error")
-//     throw err;
-//   }
-//   console.log("MySQL succesfully connected"); 
-// });
 
-
-
-export {mongoDBconnection, SQLconnection};
+export {mongoDBconnection, mongoDBLogsConnection, SQLconnection};

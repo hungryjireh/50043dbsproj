@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+import { mongoDBconnection } from '../config/database'
 
 // Create Schema
 const StoreSchema = new Schema({
@@ -13,5 +14,5 @@ const StoreSchema = new Schema({
     "categories":{}
 });
 
-const Store = mongoose.model("store", StoreSchema);
+const Store = mongoDBconnection.model("store", StoreSchema);
 module.exports = Store;

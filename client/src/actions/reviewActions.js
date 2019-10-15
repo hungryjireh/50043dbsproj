@@ -38,3 +38,55 @@ export const getBookReviews = (bookID) => dispatch => {
         })
       );
   };
+
+  export const addNewReview = (review, user, bookID) => dispatch => {
+
+    review["reviewerID"] = user.userID; //TODO add userID to User model
+    review["reviewerName"] = user.name;
+    review["unixReviewTime"] = Date.now()
+
+    axios
+      .post(`/api/review/${bookID}`, review)
+      .then(res => getBookReviews(bookID)) // TODO or SET_USER_REVIEW or histoy.push?
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  };
+
+  export const editReview = (review, reviewID) => dispatch => {
+
+    review["unixReviewTime"] = Date.now()
+
+    axios
+      .put(`/api/review/${reviewID}`, review)
+      .then(res => getBookReviews(bookID)) // TODO or SET_USER_REVIEW or histoy.push?
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  };
+
+  export const deleteReview = (reviewID) => dispatch => {
+    axios
+      .delete(`/api/review/${reviewID}`)
+      .then(res => getBookReviews(bookID)) // TODO or SET_USER_REVIEW or histoy.push?
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  };
+
+
+  export const setReview = (review) => dispatch => {
+    dispatch({
+        type: SET_REVIEW,
+        payload: review
+      })
+  }

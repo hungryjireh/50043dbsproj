@@ -12,7 +12,7 @@ router.get('/getbooks', (req, res, next) => {
     Store.find((err, data) => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ data });
-    });
+    }).limit(50);
 });
 
 router.get('/book/:bookid', (req, res, next) => {
@@ -23,9 +23,23 @@ router.get('/book/:bookid', (req, res, next) => {
 });
 
 router.get('/search', (req, res, next) => {
-    let querry = req.query.search
-    //TODO
-    return []
+    let search = req.query.search
+    let category = req.query.category
+
+    var query = { $and: [
+        { categories: { $elemMatch: { $elemMatch: { $regex: category, $options: 'i' } } } },
+        { $or:[
+            { title: { $regex: search, $options: 'i' } },
+            { description: { $regex: search, $options: 'i' } }
+        ]}
+    ]
+    }
+
+    Store.find(query, (err, data) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json({ data });
+    })
+    .limit(50);
 });
 
 module.exports = router;

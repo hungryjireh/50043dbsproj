@@ -4,14 +4,15 @@ import { mongoDBconnection } from '../config/database'
 
 // Create Schema
 const StoreSchema = new Schema({
-    "asin": {type: String },
+    "asin": { type: String },
+    "title": { type: String },
     "description": { type: String },
     "price": { type: Number },
     "imUrl": { type: String },
-    "related": {},
+    "related": { type: [String] },
     "salesRank" : {},
     "brand" : { type: String },
-    "categories":{}
+    "categories":{ type: [[String]] }
 });
 
 const Store = mongoDBconnection.model("store", StoreSchema);

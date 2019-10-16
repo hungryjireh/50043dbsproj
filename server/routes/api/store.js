@@ -16,15 +16,15 @@ router.get('/getbooks', (req, res, next) => {
 });
 
 router.get('/book/:bookid', (req, res, next) => {
-    const bookid = req.params.bookid
-
-    // TODO
-    return null
+    Store.findOne({ asin:  req.params.bookid }, (err, data) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json({ data });
+    })
 });
 
 router.get('/search', (req, res, next) => {
-    let search = req.query.search
-    let category = req.query.category
+    let search = req.query.search || ""
+    let category = req.query.category || ""
 
     var query = { $and: [
         { categories: { $elemMatch: { $elemMatch: { $regex: category, $options: 'i' } } } },

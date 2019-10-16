@@ -21,7 +21,7 @@ class Navbar extends Component {
 // ##############################################################
 // ##########################  USER  ############################
 // ##############################################################
-      // <div id="mySidebar" class="sidebar" onmouseover="testIn()" onmouseout="testOut()">
+      // <div id="mySidebar" class="sidebar">
       //   <div id="avatar-box">
       //     <div className="avatar">
       //       <img className="avatar" src={Man} alt="" />
@@ -49,7 +49,7 @@ class Navbar extends Component {
 // ##########################  ADMIN  ###########################
 // ##############################################################
 
-      <div id="mySidebar" class="sidebar" onmouseover="testIn()" onmouseout="testOut()">
+      <nav id="mySidebar" class="sidebar">
         <div id="avatar-box">
           <div className="avatar">
             <img className="avatar" src={Admin} alt="" />
@@ -71,7 +71,7 @@ class Navbar extends Component {
             >
               Logout
             </button>
-      </div>
+      </nav>
     );
   }
 }

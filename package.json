@@ -25,7 +25,6 @@
       ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "identity-obj-proxy"
     }
   },
-  "proxy": "http://localhost:5000",
   "author": "",
   "license": "MIT",
   "dependencies": {
@@ -93,5 +92,10 @@
     "webpack": "^4.15.1",
     "webpack-cli": "^3.0.8",
     "webpack-dev-server": "^3.8.2"
+  },
+  "proxy": {
+    "/api/*": {
+      "target": "http://localhost:5000"
+    }
   }
 }

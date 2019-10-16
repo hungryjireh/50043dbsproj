@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../utils/api"
 
 
 import { SEARCH_BOOKS, GET_BOOK_DETAIL, GET_ERRORS, SET_BOOK_DETAIL } from "./types";
@@ -6,7 +6,7 @@ import { SEARCH_BOOKS, GET_BOOK_DETAIL, GET_ERRORS, SET_BOOK_DETAIL } from "./ty
 // TODO
 
 export const searchBooks = (searchStr) => dispatch => {
-    axios
+    api
       .get(`/api/store/search?search=${searchStr}`)
       .then(res => 
         dispatch({
@@ -23,7 +23,7 @@ export const searchBooks = (searchStr) => dispatch => {
   };
 
   export const getBookDetail = (bookID) => dispatch => {
-    axios
+    api
       .get(`/api/store/book/${bookID}`)
       .then(res => 
         dispatch({

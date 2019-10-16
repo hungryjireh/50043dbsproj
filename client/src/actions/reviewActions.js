@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../utils/api"
 
 
 import { SET_REVIEW, SET_BOOK_REVIEWS, SET_USER_REVIEWS, GET_ERRORS } from "./types";
@@ -6,7 +6,7 @@ import { SET_REVIEW, SET_BOOK_REVIEWS, SET_USER_REVIEWS, GET_ERRORS } from "./ty
 //TODO
 
 export const getBookReviews = (bookID) => dispatch => {
-    axios
+    api
       .get(`/api/review/book/${bookID}`)
       .then(res => 
         dispatch({
@@ -23,7 +23,7 @@ export const getBookReviews = (bookID) => dispatch => {
   };
 
   export const getUserReviews = (userID) => dispatch => {
-    axios
+    api
       .get(`/api/review//user/${userID}`)
       .then(res => 
         dispatch({
@@ -45,7 +45,7 @@ export const getBookReviews = (bookID) => dispatch => {
     review["reviewerName"] = user.name;
     review["unixReviewTime"] = Date.now()
 
-    axios
+    api
       .post(`/api/review/${bookID}`, review)
       .then(res => getBookReviews(bookID)) // TODO or SET_USER_REVIEW or histoy.push?
       .catch(err =>
@@ -60,7 +60,7 @@ export const getBookReviews = (bookID) => dispatch => {
 
     review["unixReviewTime"] = Date.now()
 
-    axios
+    api
       .put(`/api/review/${reviewID}`, review)
       .then(res => getBookReviews(bookID)) // TODO or SET_USER_REVIEW or histoy.push?
       .catch(err =>

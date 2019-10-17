@@ -53,3 +53,4 @@ data.json
 KindleMetadata.bson
 dump.sql
 DBSProject.pem
+.DS_Store

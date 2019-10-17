@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const Logs = require("../../models/Logs");
+
 import { SQLconnection } from '../../config/database'
 
 
@@ -24,8 +26,29 @@ router.get('/user/:reviewerID', (req, res, next) => { // or -> /api/user/:id/rev
     const query = `SELECT * from reviews WHERE reviewerID == ${reviewerID} LIMIT ${offset}, ${limit};`
 
     SQLconnection.query(query, (error, results, fields) => {
-        if(error) throw error;
-        res.send(JSON.stringify(results));
+        if(error) {
+            const newLogs = new Logs({
+                timestamp: Date.now(),
+                database: "MySQL - ReviewerID",
+                method: "GET",
+                userID: null,
+                parameters: "/user/" + reviewerID,
+                response: "400"
+            });
+            newLogs.save();
+            throw error;
+        } else {
+            const newLogs = new Logs({
+                timestamp: Date.now(),
+                database: "MySQL - ReviewerID",
+                method: "GET",
+                userID: null,
+                parameters: "/user/" + reviewerID,
+                response: "200"
+            });
+            newLogs.save();
+            res.send(JSON.stringify(results));
+        }
     });
 });
 
@@ -38,8 +61,29 @@ router.get('/book/:bookID', (req, res, next) => { // or -> /api/user/:id/reviews
     const query = `TODO LIMIT ${offset}, ${limit};`
 
     SQLconnection.query(query, (error, results, fields) => {
-        if(error) throw error;
-        res.send(JSON.stringify(results));
+        if(error) {
+            const newLogs = new Logs({
+                timestamp: Date.now(),
+                database: "MySQL - ReviewerID",
+                method: "GET",
+                userID: null,
+                parameters: "/book/" + bookID,
+                response: "400"
+            });
+            newLogs.save();
+            throw error;
+        } else {
+            const newLogs = new Logs({
+                timestamp: Date.now(),
+                database: "MySQL - ReviewerID",
+                method: "GET",
+                userID: null,
+                parameters: "/book/" + bookID,
+                response: "200"
+            });
+            newLogs.save();
+            res.send(JSON.stringify(results));
+        }
     });
 });
 
@@ -51,8 +95,29 @@ router.post('/:bookID', (req, res, next) => {
     const query = "INSERT INTO table_name (column1, column2, ...) VALUES (value1, value2, ...);" //TODO
 
     SQLconnection.query(query, (error, results, fields) => {
-        if(error) throw error;
-        res.send(JSON.stringify(results));
+        if(error) {
+            const newLogs = new Logs({
+                timestamp: Date.now(),
+                database: "MySQL - BookID",
+                method: "POST",
+                userID: null,
+                parameters: "/" + bookID,
+                response: "400"
+            });
+            newLogs.save();
+            throw error;
+        } else {
+            const newLogs = new Logs({
+                timestamp: Date.now(),
+                database: "MySQL - BookID",
+                method: "POST",
+                userID: null,
+                parameters: "/" + bookID,
+                response: "200"
+            });
+            newLogs.save();
+            res.send(JSON.stringify(results));
+        }
     });
 })
 
@@ -63,8 +128,29 @@ router.put('/:asin', (req, res, next) => {
     const query = "UPDATE table_name SET column1 = value1, column2 = value2, ... WHERE condition;" //TODO
 
     SQLconnection.query(query, (error, results, fields) => {
-        if(error) throw error;
-        res.send(JSON.stringify(results));
+        if(error) {
+            const newLogs = new Logs({
+                timestamp: Date.now(),
+                database: "MySQL - asin",
+                method: "PUT",
+                userID: null,
+                parameters: "/" + asin,
+                response: "400"
+            });
+            newLogs.save();
+            throw error;
+        } else {
+            const newLogs = new Logs({
+                timestamp: Date.now(),
+                database: "MySQL - asin",
+                method: "PUT",
+                userID: null,
+                parameters: "/" + asin,
+                response: "200"
+            });
+            newLogs.save();
+            res.send(JSON.stringify(results));
+        }
     });
 
 router.delete("/:asin", (req, res, next) => {
@@ -73,8 +159,29 @@ router.delete("/:asin", (req, res, next) => {
     const query = "DELETE FROM table_name WHERE condition;" //TODO
 
     SQLconnection.query(query, (error, results, fields) => {
-        if(error) throw error;
-        res.send(JSON.stringify(results));
+        if(error) {
+            const newLogs = new Logs({
+                timestamp: Date.now(),
+                database: "MySQL - asin",
+                method: "DELETE",
+                userID: null,
+                parameters: "/" + asin,
+                response: "400"
+            });
+            newLogs.save();
+            throw error;
+        } else {
+            const newLogs = new Logs({
+                timestamp: Date.now(),
+                database: "MySQL - asin",
+                method: "DELETE",
+                userID: null,
+                parameters: "/" + asin,
+                response: "200"
+            });
+            newLogs.save();
+            res.send(JSON.stringify(results));
+        }
     });
 })
 

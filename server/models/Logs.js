@@ -15,4 +15,5 @@ const LogSchema = new Schema({
 });
 
 const Logs = mongoDBLogsConnection.model("logs", LogSchema);
+
 module.exports = Logs;

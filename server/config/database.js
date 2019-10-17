@@ -15,10 +15,10 @@ mongoose.set('useFindAndModify', false);
 const mongoDBconnection = mongoose.createConnection(mongodb.uri, opt);
 const mongoDBLogsConnection = mongoose.createConnection(mongodbLogs.uri, opt);
 
-mongoDBconnection.on('connected', () => console.log("connected to main mongodb database"));
+mongoDBconnection.on('connected', () => console.log("connected to main mongodb books database"));
 mongoDBconnection.on('error',  (e) => console.error("error connecting to main mongodb database ->", e.message));
 
-mongoDBLogsConnection.on('connected', () => console.log("connected to main mongodb database"));
+mongoDBLogsConnection.on('connected', () => console.log("connected to main mongodb logs database"));
 mongoDBLogsConnection.on('error',  (e) => console.error("error connecting to log mongodb database ->", e.message));
 
 

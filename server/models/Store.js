@@ -16,4 +16,5 @@ const StoreSchema = new Schema({
 });
 
 const Store = mongoDBconnection.model("store", StoreSchema);
+// const Store = mongoDBconnection.model("storeTest", StoreSchema);
 module.exports = Store;

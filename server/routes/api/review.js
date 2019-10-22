@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const Logs = require("../../models/Logs");
+const ReviewModel = require("../../models/Review");
 
 import { SQLconnection } from '../../config/database'
 
@@ -14,6 +15,31 @@ import { SQLconnection } from '../../config/database'
     // "reviewerName" : { type: String },
     // "summary":{ type: String },
     // "unixReviewTime": { type: Number},  //timestamp
+
+
+// API Endpoint: http://localhost:5000/api/review/allreviews
+router.get('/allreviews', (req, res, next) => {
+    SQLconnection.query('SELECT * FROM Kindle LIMIT 20;', function (error, results ) {
+        if (error){
+            console.log(error)
+        }else{
+            res.send(JSON.stringify(results));
+        }
+    });
+});
+
+// API Endpoint: http://localhost:5000/api/review/:asin
+router.get('/:asin', (req, res, next) => {
+    const asin = req.params.asin
+    console.log(asin)
+    SQLconnection.query(`SELECT * FROM Kindle WHERE asin = '${asin}';`, function (error, results ) {
+        if (error){
+            console.log(error)
+        }else{
+            res.send(JSON.stringify(results));
+        }
+    });
+});
 
 // API Endpoint: http://localhost:5000/api/review/user/:reviewerID
 router.get('/user/:reviewerID', (req, res, next) => { // or -> /api/user/:id/reviews ???

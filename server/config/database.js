@@ -22,6 +22,7 @@ mongoDBLogsConnection.on('connected', () => console.log("connected to main mongo
 mongoDBLogsConnection.on('error',  (e) => console.error("error connecting to log mongodb database ->", e.message));
 
 
+
 // MySQL Database connection
 const mysql = require("mysql");
 const { sqldb: { host, user, password, dbName } } = config;
@@ -32,6 +33,5 @@ const SQLconnection = mysql.createConnection({
   password : password,
   database : dbName,
 });
-
 
 export {mongoDBconnection, mongoDBLogsConnection, SQLconnection};

@@ -91,7 +91,7 @@ class Button extends React.Component {
   render() {
     return (
       // <Link to={`/project/${user.id}`}>
-      <Link to={'/project'}>
+      <Link to={'/book/'}>
         <button className="button button-primary button-improve">
           <i className="fa fa-chevron-right"></i> Find out more
         </button>

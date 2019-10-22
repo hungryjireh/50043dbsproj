@@ -14,6 +14,7 @@ import PrivateRoute from "./private-route/PrivateRoute";
 import Dashboard from "./Users/dashboard/Dashboard";
 import Project from "./Users/project/Project";
 import Store from "./card/card-marketplace";
+import Review from "./Books/Review";
 import AdminDashboard from "./Admin/Dashboard/Dashboard"
 import CreateProject from "./Admin/Project/create-project"
 
@@ -48,9 +49,9 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/getbooks" component={Store} />
+              <Route exact path="/book/:asin" component={Review} />
 
 
-            
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>
           </div>

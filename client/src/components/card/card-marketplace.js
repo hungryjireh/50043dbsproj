@@ -5,20 +5,15 @@ import './card-marketplace.scss'
 // Start App
 
 class CardMarketplace extends React.Component { 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       posts: {},
-      intervalIsSet : false
     };
   };
 
   componentDidMount() {
     this.getDataFromDb();
-    if (!this.state.intervalIsSet) {
-      let interval = setInterval(this.getDataFromDb, 10000);
-      this.setState({ intervalIsSet: interval });
-    }
   };
 
   getDataFromDb = () => {
@@ -26,7 +21,6 @@ class CardMarketplace extends React.Component {
       .then(data => data.json())
       .then(res => this.setState({ posts: res.data }));
   };
-
 
   render() {
     console.log(this.state.posts)
@@ -58,16 +52,26 @@ class Title extends React.Component {
 
 
 class Button extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    const id = event.target.value;
+    console.log(id);
+  }
+
   render() {
+    const { asin, index } = this.props;
     return (
-        <div style={{textAlign : "center"}}>
-        {/* <Link to={`/project/${user.id}`}> */}
-            <Link to={'/project'}>
-                <button className="button button-primary marketplace-button-improve">
-                <i className="fa fa-chevron-right"></i> Find out more
-                </button>
-            </Link>
-        </div>
+      <div style={{textAlign : "center"}}>
+          <Link to={`/book/${asin}`}>
+              <button onClick={this.handleClick} value={asin} className="button button-primary marketplace-button-improve">
+              <i className="fa fa-chevron-right"></i> Find out more
+              </button>
+          </Link>
+      </div>
     )
   }
 }
@@ -85,7 +89,7 @@ class CardHeader extends React.Component {
     };
     return (
       <header style={style} className="card-header">
-        {/* <h4 className="card-header--title">{asin}</h4> */}
+        <h4 className="card-header--title">{asin}</h4>
       </header>
     )
   }
@@ -94,14 +98,14 @@ class CardHeader extends React.Component {
 
 class CardBody extends React.Component {
   render() {
-    const { description, price } = this.props;
+    const { description, price, asin, index} = this.props;
     return (
       <div className="card-body">
         <h2 className="limit-box">{description}</h2>
         <div>
             <p className="body-content">{price}</p>
         </div>
-        <Button />
+        <Button asin={asin} index={index}/>
       </div>
     )
   }
@@ -110,11 +114,10 @@ class CardBody extends React.Component {
 
 class Card extends React.Component {
   render() {
-    console.log(this.props.details)
     return (
       <article className="card marketplace-card">
         <CardHeader asin={this.props.details.asin} imUrl={this.props.details.imUrl}/>
-        <CardBody description={this.props.details.description} price={this.props.details.price}/>
+        <CardBody index={this.props.index} asin={this.props.details.asin} description={this.props.details.description} price={this.props.details.price}/>
       </article>
     )
   }

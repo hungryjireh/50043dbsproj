@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Logs = require("../../models/Logs");
 const ReviewModel = require("../../models/Review");
+const User = require("../../models/User")
 
 import { SQLconnection } from '../../config/database'
 
@@ -117,8 +118,12 @@ router.post('/:bookID', (req, res, next) => {
 
     const bookID = req.params.bookID
     const review = req.body
+    console.log(review)
 
-    const query = `INSERT INTO testKindle (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary) VALUES ('${bookID}', '${review.helpful}', '${review.overall}', '${review.reviewText}', '${review.reviewTime}', '${review.reviewerID}', '${review.reviewerName}', '${review.summary}');` //TODO
+    const query = `INSERT INTO testKindle (asin, reviewText, reviewTime, reviewerID) 
+    VALUES ('${bookID}', '${review.review_content}', '${review.date}', '${review.token}');` //TODO
+
+    // const query = `INSERT INTO testKindle (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary) VALUES ('${bookID}', '${review.helpful}', '${review.overall}', '${review.reviewText}', '${review.reviewTime}', '${review.reviewerID}', '${review.reviewerName}', '${review.summary}');` //TODO
     SQLconnection.query(query, (error, results, fields) => {
         if(error) {
             const newLogs = new Logs({

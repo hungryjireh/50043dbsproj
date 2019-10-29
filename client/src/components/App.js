@@ -12,11 +12,10 @@ import Register from "./auth/Register";
 import Login from "./auth/Login";
 import PrivateRoute from "./private-route/PrivateRoute";
 import Dashboard from "./Users/dashboard/Dashboard";
-import Project from "./Users/project/Project";
 import Store from "./card/card-marketplace";
 import Review from "./Books/Review";
-import AdminDashboard from "./Admin/Dashboard/Dashboard"
-import CreateProject from "./Admin/Project/create-project"
+import AddReview from "./Books/AddReview";
+
 
 
 // Check for token to keep user logged in
@@ -49,6 +48,7 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/getbooks" component={Store} />
+              <Route exact path="/addreview" component={AddReview} />
               <Route exact path="/book/:asin" component={Review} />
 
 

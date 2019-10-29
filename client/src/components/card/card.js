@@ -4,42 +4,42 @@ import './card.scss'
 
 
 const PostsData = [
-  {
-    "category": "Solar",
-    "title": "Research on the possible application of decentralize mircogrid powered by blockchain",
-    "text": "Reduce reliance on the main power grid, giving power to the community",
-    "image": "https://source.unsplash.com/user/ilyapavlov/600x400"
-  },
-  {
-    "category": "Shopee",
-    "title": "Study the market of retail and ecommerce",
-    "text": "In the past few years, the effects of ecommerce have greatly reduced the profit for traditional retail shops.",
-    "image": "https://source.unsplash.com/user/_vickyreyes/600x400"
-  },
-  {
-    "category": "SoftBank",
-    "title": "Behavioural studies of investments",
-    "text": "The next unicorn and their technology",
-    "image": "https://source.unsplash.com/user/ilyapavlov/600x400"
-  },
-  {
-    "category": "Google",
-    "title": "Collecting localised speech data",
-    "text": "Create an AI that speaks like a local.",
-    "image": "https://source.unsplash.com/user/erondu/600x400"
-  },
-  {
-    "category": "ST Aerospace",
-    "title": "Using CV to detect damages on the fan blade ",
-    "text": "Identify the fan blades that requires repair given a certain threshold",
-    "image": "https://source.unsplash.com/user/_vickyreyes/600x400"
-  },
-  {
-    "category": "Orange Tee",
-    "title": "Analysis of the property market in Myanmar",
-    "text": "Studying the potential growth and potential investment in Yangon region",
-    "image": "https://source.unsplash.com/user/ilyapavlov/600x400"
-  }
+  // {
+  //   "category": "Solar",
+  //   "title": "Research on the possible application of decentralize mircogrid powered by blockchain",
+  //   "text": "Reduce reliance on the main power grid, giving power to the community",
+  //   "image": "https://source.unsplash.com/user/ilyapavlov/600x400"
+  // },
+  // {
+  //   "category": "Shopee",
+  //   "title": "Study the market of retail and ecommerce",
+  //   "text": "In the past few years, the effects of ecommerce have greatly reduced the profit for traditional retail shops.",
+  //   "image": "https://source.unsplash.com/user/_vickyreyes/600x400"
+  // },
+  // {
+  //   "category": "SoftBank",
+  //   "title": "Behavioural studies of investments",
+  //   "text": "The next unicorn and their technology",
+  //   "image": "https://source.unsplash.com/user/ilyapavlov/600x400"
+  // },
+  // {
+  //   "category": "Google",
+  //   "title": "Collecting localised speech data",
+  //   "text": "Create an AI that speaks like a local.",
+  //   "image": "https://source.unsplash.com/user/erondu/600x400"
+  // },
+  // {
+  //   "category": "ST Aerospace",
+  //   "title": "Using CV to detect damages on the fan blade ",
+  //   "text": "Identify the fan blades that requires repair given a certain threshold",
+  //   "image": "https://source.unsplash.com/user/_vickyreyes/600x400"
+  // },
+  // {
+  //   "category": "Orange Tee",
+  //   "title": "Analysis of the property market in Myanmar",
+  //   "text": "Studying the potential growth and potential investment in Yangon region",
+  //   "image": "https://source.unsplash.com/user/ilyapavlov/600x400"
+  // }
 ]
 
 

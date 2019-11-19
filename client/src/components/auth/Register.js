@@ -24,7 +24,12 @@ class Register extends Component {
     }
   }
 
+
   componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
@@ -47,7 +52,7 @@ class Register extends Component {
       password2: this.state.password2
     };
 
-    this.props.registerUser(newUser, this.props.history);
+    this.props.registerUser(newUser);
   };
 
   render() {

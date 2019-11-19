@@ -8,13 +8,16 @@ class Landing extends Component {
         <div className="row">
           <div className="col s10 center-align">
             <h4>
-              <b></b> Book Review{" "}
-              <span style={{ fontFamily: "monospace" }}>GoodReads</span>
+              <span>Book Review </span>
+              <b>
+                <span style={{ fontFamily: "monospace" }}>GoodReads</span>
+              </b>
             </h4>
             <p className="flow-text grey-text text-darken-1">
               Predicting the next book you will like
             </p>
             <br />
+
             <div className="col s5">
               <Link
                 to="/register"
@@ -28,6 +31,7 @@ class Landing extends Component {
                 Register
               </Link>
             </div>
+            
             <div className="col s5">
               <Link
                 to="/login"

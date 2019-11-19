@@ -1,7 +1,17 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
+import {connect} from "react-redux";
+import {registerUser} from "../../actions/authActions";
 
 class Landing extends Component {
+
+    componentDidMount() {
+        // If logged in and user navigates to Register page, should redirect them to dashboard
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push("/dashboard");
+        }
+    }
+
   render() {
     return (
       <div style={{ height: "75vh" }} className="container valign-wrapper">
@@ -21,25 +31,15 @@ class Landing extends Component {
             <div className="col s5">
               <Link
                 to="/register"
-                style={{
-                  width: "160px",
-                  borderRadius: "3px",
-                  letterSpacing: "1.5px",
-                }}
                 className="btn btn-large waves-effect waves-light hoverable blue accent-3"
               >
                 Register
               </Link>
             </div>
-            
+
             <div className="col s5">
               <Link
                 to="/login"
-                style={{
-                  width: "160px",
-                  borderRadius: "3px",
-                  letterSpacing: "1.5px"
-                }}
                 className="btn btn-large btn-flat waves-effect white black-text"
               >
                 Log In
@@ -52,4 +52,11 @@ class Landing extends Component {
   }
 }
 
-export default Landing;
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+});
+
+export default connect(
+    mapStateToProps
+)(withRouter(Landing));

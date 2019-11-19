@@ -19,7 +19,7 @@ class Navbar extends Component {
     const { user } = this.props.auth;
     return (
 
-      <nav id="mySidebar" class="sidebar">
+      <nav id="mySidebar" className="sidebar">
 
       <Link to={'/dashboard'} className={"home-logo"}>GoodReviews</Link>
 
@@ -29,9 +29,9 @@ class Navbar extends Component {
           </div>
         </div>
         <h5  style={{color: "orange"}}>{user.name.split(" ")[0]}</h5>
-        <Link to={'/getbooks'}><span class="icon-text">Get Books</span></Link>
-        <Link to={'/addreview'}><span class="icon-text">Add Review</span></Link>
-        <a href="#"><span class="icon-text">Settings</span></a>
+        <Link to={'/getbooks'}><span className="icon-text">Get Books</span></Link>
+        <Link to={'/addreview'}><span className="icon-text">Add Review</span></Link>
+        <a href="#"><span className="icon-text">Settings</span></a>
         <button
               style={{
                 width: "150px",

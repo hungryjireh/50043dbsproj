@@ -49,7 +49,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
 
               <Route path="/" >
-                <div class="page-wrapper">
+                <div className="page-wrapper">
                   <Navbar />
 
 

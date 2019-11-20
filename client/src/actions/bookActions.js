@@ -28,7 +28,7 @@ export const searchBooks = (searchStr) => dispatch => {
       .then(res => 
         dispatch({
             type: SET_BOOK_DETAIL,
-            payload: res.data
+            payload: res.data.data
         })
         )
       .catch(err =>

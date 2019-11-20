@@ -23,7 +23,6 @@ class CardMarketplace extends React.Component {
   };
 
   render() {
-    console.log(this.state.posts)
     return <div>
       <header className="app-header"></header>
       <Title />

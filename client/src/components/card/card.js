@@ -5,71 +5,14 @@ import {connect} from "react-redux";
 import {getBookDetail, searchBooks} from "../../actions/bookActions";
 
 
-class CardDesign extends React.Component {
-
-  componentDidMount() {
-      if (this.props.books.length === 0){
-          this.props.searchBooks(" ")
-      }
-  }
-
+class CardList extends React.Component {
 
     render() {
-    return <div>
-      <header className="app-header"></header>
-      <Title />
-      <div className="app-card-list" id="app-card-list">
+    return (
+      <div className="col s12">
         {
           this.props.books.map((book, key) => <Card key={key} index={key} details={book}/>)
         }
-    </div>
-    </div>
-  }
-}
-
-
-class Title extends React.Component {
-  render() {
-    return <section className="app-title">
-      {/* <div className="app-title-content">
-        <a className="designer-link" href="https://dribbble.com/shots/1978243-Latest-News" target="_blank"> <i className="fa fa-dribbble"></i></a>
-      </div> */}
-    </section>
-  }
-}
-
-
-class CardHeader extends React.Component {
-  render() {
-    const { image, title } = this.props;
-    var style = { 
-        backgroundImage: 'url(' + image + ')',
-        height: '15rem',
-        textAlign: 'center'
-    };
-    return (
-      <header style={style} className="card-header">
-        <h4 className="card-header--title">{title}</h4>
-      </header>
-    )
-  }
-}
-
-
-class CardBody extends React.Component {
-  render() {
-    return (
-      <div className="card-body">
-        
-        <p>{this.props.categories}</p>
-        
-        <p className="body-content">{this.props.description.substring(0, 250) + "..."}</p>
-
-          <Link to={'/book/'+this.props.asin}>
-              <button className="button button-primary button-improve">
-                  <i className="fa fa-chevron-right"></i> Find out more
-              </button>
-          </Link>
       </div>
     )
   }
@@ -78,12 +21,23 @@ class CardBody extends React.Component {
 
 class Card extends React.Component {
   render() {
-      const { asin, title, imUrl, categories, description} = this.props.details;
+      const { asin, title, imUrl, description} = this.props.details;
       return (
-      <article className="card">
-        <CardHeader title={title} image={imUrl}/>
-        <CardBody asin={asin} categories={categories} description={description} />
-      </article>
+      <div className="card horizontal">
+          <div className="card-image">
+              <img src={imUrl} alt="book image"/>
+          </div>
+
+          <div className="card-stacked">
+            <div className="card-title">{title}</div>
+            <div className="card-content">{description.substring(0, 250) + "..."}</div>
+              <Link className="card-action" to={'/book/'+asin}>
+                  <button className="button button-primary button-improve">
+                      <i className="fa fa-chevron-right"></i> Find out more
+                  </button>
+              </Link>
+          </div>
+      </div>
     )
   }
 }
@@ -96,4 +50,4 @@ const mapStateToProps = state => ({
 export default connect(
     mapStateToProps,
     { getBookDetail, searchBooks }
-)(CardDesign);
+)(CardList);

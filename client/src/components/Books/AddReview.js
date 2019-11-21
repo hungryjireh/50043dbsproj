@@ -81,7 +81,7 @@ class AddReview extends Component {
                     <input ref="date" type="hidden" id="date" name="date" value={this.state.date}></input>
                     <input ref="token" type="hidden" id="token" name="token" value={this.state.token}></input>
 
-                    <button>Send data!</button>
+                    <button class="btn draw-border">Review Me</button>
                 </form>
             </div>
         )

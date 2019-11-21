@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import AddReview from "./AddReview";
 
 class Review extends Component {
     constructor(props) {
@@ -36,11 +37,16 @@ class Review extends Component {
 
         return (
             <div> 
+              <div style={{textAlign:'center'}}>
                 <img src={book_content.imUrl} />
+              </div>
+              <div style={{paddingLeft: '50px', paddingRight: '50px'}}>
                 <p>{book_content.description}</p>
                 {Object
                 .keys(review_content)
                 .map(key => <Card key={key} index={key} details={review_content[key]}/>)}
+              </div>
+              <AddReview />
             </div>
         )
     }
@@ -62,10 +68,11 @@ class CardBody extends React.Component {
 class Card extends React.Component {
     render() {
       return (
-        <article >
-            <CardBody index={this.props.index} reviewText={this.props.details.reviewText} />
-        </article>
+        <div>
+          <CardBody index={this.props.index} reviewText={this.props.details.reviewText} />
+        </div>
       )
     }
 }
+
 export default Review

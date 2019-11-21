@@ -119,8 +119,8 @@ router.post('/:bookID', (req, res, next) => {
     const bookID = req.params.bookID
     const review = req.body
     console.log('this is the body', req.body)
-    const query = `INSERT INTO testKindle (asin, reviewText, reviewerID) 
-    VALUES ('${bookID}', '${review.review}', '${review.token}');`
+    const query = `INSERT INTO testKindle (asin, reviewText, reviewerID, overall) 
+    VALUES ('${bookID}', '${review.review}', '${review.token}', '${review.rating}');`
 
     // // const query = `INSERT INTO testKindle (asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary) VALUES ('${bookID}', '${review.helpful}', '${review.overall}', '${review.reviewText}', '${review.reviewTime}', '${review.reviewerID}', '${review.reviewerName}', '${review.summary}');` //TODO
     SQLconnection.query(query, (error, results, fields) => {
@@ -153,8 +153,9 @@ router.post('/:bookID', (req, res, next) => {
 // API Endpoint: http://localhost:5000/api/review/:asin
 router.put('/:asin', (req, res, next) => {
     const asin = req.params.asin
+    const review = req.body
 
-    const query = `UPDATE testKindle SET column1 = value1, column2 = value2, ... WHERE asin = ${asin};` //TODO
+    const query = `UPDATE testKindle SET asin = '${asin}', reviewText = '${review.review}', reviewerID = '${review.token}', overall = '${review.rating}' WHERE asin = '${asin}';` //TODO
 
     SQLconnection.query(query, (error, results, fields) => {
         if(error) {
@@ -185,7 +186,7 @@ router.put('/:asin', (req, res, next) => {
 router.delete("/:asin", (req, res, next) => {
     const asin = req.params.asin
 
-    const query = `DELETE FROM testKindle WHERE asin = ${asin};` //TODO
+    const query = `DELETE FROM testKindle WHERE asin = '${asin}';` //TODO
 
     SQLconnection.query(query, (error, results, fields) => {
         if(error) {

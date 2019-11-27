@@ -126,7 +126,7 @@ class Card extends React.Component {
 class Like extends React.Component {
   render() {
     return (
-      <div id='heart' class='button'></div>
+      <div id='heart' class='button'>nice</div>
     )
   }
 }

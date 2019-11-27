@@ -123,4 +123,12 @@ class Card extends React.Component {
   }
 }
 
+class Like extends React.Component {
+  render() {
+    return (
+      <div id='heart' class='button'></div>
+    )
+  }
+}
+
 export default CardMarketplace

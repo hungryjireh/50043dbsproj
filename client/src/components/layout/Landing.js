@@ -1,50 +1,48 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import Nav from '../Nav/Nav';
+import Books from '../Image/book-front.jpeg';
+import Carousel from '../layout/Carousel';
+import Footer from '../layout/Footer'
+
+const divStyle={
+  overflowY: 'scroll',
+  width:'100%',
+  float: 'left',
+  height:'100vh',
+  position:'relative',
+  marginTop: '-10px'
+};
+
+const img = {
+  width:'100%',
+  height:'100vh',
+}
+
+const section = {
+  height:'20rem',
+  textAlign: 'center',
+  fontSize: '3rem',
+  padding: '2rem',
+}
 
 class Landing extends Component {
   render() {
     return (
-      <div style={{ height: "75vh" }} className="container valign-wrapper">
-        <div className="row">
-          <div className="col s10 center-align">
-            <h4>
-              <b></b> Book Review{" "}
-              <span style={{ fontFamily: "monospace" }}>GoodReads</span>
-            </h4>
-            <p className="flow-text grey-text text-darken-1">
-              Predicting the next book you will like
-            </p>
-            <br />
-            <div className="col s5">
-              <Link
-                to="/register"
-                style={{
-                  width: "160px",
-                  borderRadius: "3px",
-                  letterSpacing: "1.5px",
-                }}
-                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-              >
-                Register
-              </Link>
-            </div>
-            <div className="col s5">
-              <Link
-                to="/login"
-                style={{
-                  width: "160px",
-                  borderRadius: "3px",
-                  letterSpacing: "1.5px"
-                }}
-                className="btn btn-large btn-flat waves-effect white black-text"
-              >
-                Log In
-              </Link>
-            </div>
+      <div>
+        <Nav />
+        <div style={divStyle}>
+        <img style={img} src={Books} alt="Books"/>
+          <div style={section}>
+            <p>A platform that analyzes your book search and your favorite books to recommend you a possible book</p>
+            <Carousel />
           </div>
+          <div style={section}>
+            <p>Want better recommendation of books ? We are the solution for you</p> 
+          </div>
+          <Footer />
         </div>
       </div>
-    );
+    )
   }
 }
 

@@ -57,6 +57,7 @@ class Navbar extends Component {
         </div>
         <h5  style={{color: "orange"}}>{user.name.split(" ")[0]}</h5>
         <Link to={'/getbooks'}><span class="icon-text">Get Books</span></Link>
+        <Link to={'/addbooks'}><span class="icon-text">Add Books</span></Link>
         <Link to={'/addreview'}><span class="icon-text">Add Review</span></Link>
         <a href="#"><span class="icon-text">Settings</span></a>
         <button

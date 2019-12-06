@@ -90,9 +90,6 @@ class Footer extends Component {
                         <div class="col-lg-6 col-sm-7">
                             <p class="mb-0 f_400">© bryanphang.. 2019 All rights reserved.</p>
                         </div>
-                        <div class="col-lg-6 col-sm-5 text-right">
-                            <p>Made with <i class="icon_heart"></i> in <a href="#">CakeCounter</a></p>
-                        </div>
                     </div>
                 </div>
             </div>

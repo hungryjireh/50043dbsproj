@@ -15,6 +15,8 @@ import Dashboard from "./Users/dashboard/Dashboard";
 import Store from "./card/card-marketplace";
 import Review from "./Books/Review";
 import AddReview from "./Books/AddReview";
+import AddBooks from "./Books/AddBooks";
+
 
 
 
@@ -48,6 +50,7 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/getbooks" component={Store} />
+              <Route exact path="/addbooks" component={AddBooks} />
               <Route exact path="/addreview" component={AddReview} />
               <Route exact path="/book/:asin" component={Review} />
 

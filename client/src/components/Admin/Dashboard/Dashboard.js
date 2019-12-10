@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import './Dashboard.scss'
 import Navbar from "../../layout/Navbar";
-import CardList from '../../card/card';
+import CardDesign from '../../card/card';
+import NavbarTop from '../Nav/Nav'
 
 class Dashboard extends Component {
   onLogoutClick = e => {
@@ -13,6 +14,7 @@ class Dashboard extends Component {
 
     return (
       <div>
+        <NavbarTop />
         <Navbar />
         <div class="dashboard">
           <div class="col">
@@ -23,7 +25,7 @@ class Dashboard extends Component {
             </div>
             <div class="card xl">
               <h2>Current Projects</h2>
-              <CardList />
+              <CardDesign />
               <ul class="keys">
                 <li class="indicator"></li>
                 <li class="indicator"></li>

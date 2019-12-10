@@ -1,0 +1,14 @@
+nav {
+    color: #fff;
+    background-color: #F0B27A ;
+    width: 100%;
+    height: 56px;
+    line-height: 56px;
+    position: fixed;
+    z-index: 1;
+}
+
+nav ul a {
+    font-family: 'Lato';
+    font-size: 20px
+}

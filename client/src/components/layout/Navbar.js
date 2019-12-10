@@ -18,20 +18,48 @@ class Navbar extends Component {
   render() {
     const { user } = this.props.auth;
     return (
+// ##############################################################
+// ##########################  USER  ############################
+// ##############################################################
+      // <div id="mySidebar" class="sidebar">
+      //   <div id="avatar-box">
+      //     <div className="avatar">
+      //       <img className="avatar" src={Man} alt="" />
+      //     </div>
+      //   </div>
+      //   <h5  style={{color: "orange"}}>{user.name.split(" ")[0]}</h5>
+      //   <Link to={'/projectmarketplace'}><span class="icon-text">Projects</span></Link>
+      //   <a href="#"><span class="icon-text">Clients</span></a>
+      //   <a href="#"><span class="icon-text">Settings</span></a>
+      //   <button
+      //         style={{
+      //           width: "150px",
+      //           borderRadius: "3px",
+      //           letterSpacing: "1.5px",
+      //           marginTop: "1rem"
+      //         }}
+      //         onClick={this.onLogoutClick}
+      //         className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+      //       >
+      //         Logout
+      //       </button>
+      // </div>
 
-      <nav id="mySidebar" className="sidebar">
+// ##############################################################
+// ##########################  ADMIN  ###########################
+// ##############################################################
 
-      <Link to={'/dashboard'} className={"home-logo"}>GoodReviews</Link>
-
+      <nav id="mySidebar" class="sidebar">
         <div id="avatar-box">
           <div className="avatar">
             <img className="avatar" src={Admin} alt="" />
           </div>
         </div>
         <h5  style={{color: "orange"}}>{user.name.split(" ")[0]}</h5>
-        <Link to={'/getbooks'}><span className="icon-text">Get Books</span></Link>
-        <Link to={'/addreview'}><span className="icon-text">Add Review</span></Link>
-        <a href="#"><span className="icon-text">Settings</span></a>
+        <Link to={'/getbooks'}><span class="icon-text">Get Books</span></Link>
+        <Link to={'/addbooks'}><span class="icon-text">Add Books</span></Link>
+        <Link to={'/addreview'}><span class="icon-text">Add Review</span></Link>
+        <a href="#"><span class="icon-text">Settings</span></a>
         <button
               style={{
                 width: "150px",

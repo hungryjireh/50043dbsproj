@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './card-marketplace.scss'
+import './heart-shape.css'
 
 // Start App
 
@@ -64,12 +65,12 @@ class Button extends React.Component {
   render() {
     const { asin, index } = this.props;
     return (
-      <div style={{textAlign : "center"}}>
-          <Link to={`/book/${asin}`}>
-              <button onClick={this.handleClick} value={asin} className="button button-primary marketplace-button-improve">
+      <div>
+        <Link to={`/book/${asin}`}>
+            <button onClick={this.handleClick} value={asin} className="button button-primary marketplace-button-improve">
               <i className="fa fa-chevron-right"></i> Find out more
-              </button>
-          </Link>
+            </button>
+        </Link>
       </div>
     )
   }
@@ -110,6 +111,29 @@ class CardBody extends React.Component {
   }
 }
 
+class Like extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      button: false
+    }
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick = () => {
+    this.setState({
+      button:!this.state.button
+    })
+  }
+
+  render() {
+    return (
+      <div className="heart">
+        <a className={this.state.button ? "heart-shape-true": "heart-shape-false"} onClick={this.handleClick}></a>
+      </div>
+    )
+  }
+}
 
 class Card extends React.Component {
   render() {
@@ -117,6 +141,7 @@ class Card extends React.Component {
       <article className="card marketplace-card">
         <CardHeader asin={this.props.details.asin} imUrl={this.props.details.imUrl}/>
         <CardBody index={this.props.index} asin={this.props.details.asin} description={this.props.details.description} price={this.props.details.price}/>
+        <Like />
       </article>
     )
   }

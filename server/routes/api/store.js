@@ -4,6 +4,7 @@ const router = express.Router();
 // Load User model
 const Store = require("../../models/Store");
 const Logs = require("../../models/Logs");
+const AddBook = require("../../models/AddBook");
 
 // @route GET api/store
 // @get all books in store
@@ -130,16 +131,24 @@ router.post('/:bookID', (req, res, next) => {
           newLogs.save();
           return res.status(404).json({ booknotfound: "Book already exists" });
         } else {
-            const newBook = new Store({
-                "asin": bookID,
+            // const newBook = new Store({
+            //     "asin": bookID,
+            //     "title": bookData.title,
+            //     "description": bookData.description,
+            //     "price": bookData.price,
+            //     "imUrl": bookData.imUrl,
+            //     "related": bookData.related,
+            //     "salesRank" : bookData.salesRank,
+            //     "brand" : bookData.brand,
+            //     "categories": bookData.categories
+            // });
+            const newBook = new AddBook({
+                // "asin": bookData.asin,    need to auto generate
+                "token": bookData.token,
                 "title": bookData.title,
                 "description": bookData.description,
                 "price": bookData.price,
-                "imUrl": bookData.imUrl,
-                "related": bookData.related,
-                "salesRank" : bookData.salesRank,
-                "brand" : bookData.brand,
-                "categories": bookData.categories
+                "image": book.image,
             });
             newBook.save()
             const newLogs = new Logs({

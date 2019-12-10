@@ -1,0 +1,71 @@
+.heart{
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+
+.heart-shape-false{
+    position: relative;
+    width: 15px;
+    height: 15px;
+    transform: rotate(45deg);
+    background-color: grey;
+}
+.heart-shape-false:before,
+.heart-shape-false:after{
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    content: '';
+    border-radius: 50%;
+    background-color: grey;
+    
+}
+.heart-shape-false:before{
+    bottom: 0px;
+    left: -7.5px;
+}
+.heart-shape-false:after{
+    top: -7.5px;
+    right: 0px;
+}
+
+
+.heart-shape-true{
+    position: relative;
+    width: 15px;
+    height: 15px;
+    transform: rotate(45deg);
+    background-color: red;
+}
+.heart-shape-true:before,
+.heart-shape-true:after{
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    content: '';
+    border-radius: 50%;
+    background-color: red;
+    
+}
+.heart-shape-true:before{
+    bottom: 0px;
+    left: -7.5px;
+}
+.heart-shape-true:after{
+    top: -7.5px;
+    right: 0px;
+}
+
+
+
+a:hover{
+    background-color: red;
+}
+a:hover::before {
+    background-color: red;
+}
+a:hover::after {
+    background-color: red;
+}

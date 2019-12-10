@@ -1,0 +1,60 @@
+Connecting manually:
+
+1) Move dbs1.pem file into .ssh folder in user directory
+
+# open command opens given path using the default system application for file type
+$ open ~/.ssh 
+
+2) Change permissions
+
+# for Linux users
+$ chmod 400 ~/.ssh/dbs1.pem
+
+# for Windows users
+$path = "~\.ssh\dbs1.pem"
+# Reset to remove explict permissions
+icacls.exe $path /reset
+# Give current user explicit read-permission
+icacls.exe $path /GRANT:R "$($env:USERNAME):(R)"
+# Disable inheritance and remove inherited permissions
+icacls.exe $path /inheritance:r
+
+3) Connect SSH
+$ ssh -i ~\.ssh\dbs1.pem ec2-user@ec2-3-17-12-213.us-east-2.compute.amazonaws.com
+
+4) Update
+$ sudo yum update -y
+
+ONCE CONNECTED:
+
+1) Install NVM
+$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+$ . ~/.nvm/nvm.sh
+
+2) Install Node
+$ nvm install node
+
+3) Install git
+$ sudo yum install -y git
+
+4) Clone our project file
+$  git clone https://github.com/hungryjireh/50043dbsproj.git
+
+5) Install dependencies
+$ cd 50043dbsproj
+$ npm install
+
+6) Install pm2
+$ npm install pm2 -g
+
+7) Start app w/ pm2
+$ pm2 start npm --name "start_kindle" -- start
+
+8) Run the copy paste command
+$ sudo env PATH=$PATH:/home/ec2-user/.nvm/versions/node/v13.3.0/bin/home/ec2user/.nvm/versions/node/v13.3.0/lib/node_modules/pm2/bin/pm2 startup systemd -u ec2-user --hp /home/ec2-user
+
+9) Save state
+$ pm2 save
+
+10) Reboot program (will be up and running 1 min later)
+$ sudo reboot

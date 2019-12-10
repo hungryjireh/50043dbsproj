@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import './addreview.scss'
+import NavbarTop from '../Nav/Nav'
+import Navbar from '../layout/Navbar'
+
 
 
 class AddReview extends Component {
@@ -79,18 +82,25 @@ class AddReview extends Component {
 
     render() {
         return (
-            <div className="addreview"> 
-                <form onSubmit={this.handleSubmit}>
-                    {/* <label htmlFor="book_id">BookID</label>
-                    <input ref="bookid" onChange={(evt) => this.handleChange(evt)} id="book_id" name="book_id" type="text" /> */}
-                    <label htmlFor="reivew">Review</label>
-                        <textarea ref="review" name="reivew" type="text" onChange={(evt) => this.handleReview(evt)}/>
-                    <label htmlFor="rating">Rating</label>
-                        <input ref="rating" id="rating" name="rating" type="text" onChange={(evt) => this.handleRating(evt)}/>
-                    {/* <input ref="date" type="hidden" id="date" name="date" value={this.state.date}></input> */}
-                        <input ref="token" type="hidden" id="token" name="token" value={this.state.token}></input>
-                    <button class="btn draw-border">Review Me</button>
-                </form>
+            <div>
+                <Navbar />
+                <NavbarTop />
+                <div className="addreview"> 
+                    <div>
+                        <h1 style={{textAlign: 'center'}}>Add a book review for your favourite book</h1>
+                    </div>
+                    <form onSubmit={this.handleSubmit}>
+                        <label htmlFor="book_id">BookID</label>
+                        <input ref="bookid" onChange={(evt) => this.handleChange(evt)} id="book_id" name="book_id" type="text" />
+                        <label htmlFor="reivew">Review</label>
+                            <textarea ref="review" name="reivew" type="text" onChange={(evt) => this.handleReview(evt)}/>
+                        <label htmlFor="rating">Rating</label>
+                            <input ref="rating" id="rating" name="rating" type="text" onChange={(evt) => this.handleRating(evt)}/>
+                        {/* <input ref="date" type="hidden" id="date" name="date" value={this.state.date}></input> */}
+                            <input ref="token" type="hidden" id="token" name="token" value={this.state.token}></input>
+                        <button class="btn draw-border">Review Me</button>
+                    </form>
+                </div>
             </div>
         )
     }

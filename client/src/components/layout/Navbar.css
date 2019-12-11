@@ -11,12 +11,10 @@ body {
     left: 0;
     background-color: #111;
     transition: 0.5s;
-    padding-top: 60px;
     text-align: center
   }
   
   .sidebar a {
-    padding-top: 20px;
     text-decoration: none;
     font-size: 25px;
     color: #818181;
@@ -60,6 +58,7 @@ body {
   }
   
   #avatar-box{
+      padding-top: 60px;
       display: flex;
       justify-content: center
   }
@@ -72,3 +71,11 @@ body {
       font-size: 18px;
     }
   }  
+
+  .home-logo{
+    padding: 0;
+  }
+
+  .home-logo{
+    padding: 0;
+  }

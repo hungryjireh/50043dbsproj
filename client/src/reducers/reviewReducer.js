@@ -1,7 +1,7 @@
 import { SET_BOOK_DETAIL, SET_BOOK_REVIEWS, SET_USER_REVIEWS } from "../actions/types";
 
 const initialState = {
-  reviewDetail: null,
+  bookDetail: null,
   bookReviews: [],
   userReviews: [],
 };
@@ -11,7 +11,7 @@ export default function(state = initialState, action) {
     case SET_BOOK_DETAIL:
       return {
         ...state,
-        reviewDetail: action.payload
+        bookDetail: action.payload
       };
     case SET_BOOK_REVIEWS:
       return {

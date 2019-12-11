@@ -5,7 +5,3 @@ use logs
 db.logs.insert({1: "hello!"})
 use test
 db.users.insert({1: "hello!"})
-use test
-db.users.insert({1: "hello!"})
-use test
-db.users.insert({1: "hello!"})

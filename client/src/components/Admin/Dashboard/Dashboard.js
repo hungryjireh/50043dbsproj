@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import './Dashboard.scss'
 import Navbar from "../../layout/Navbar";
-import CardDesign from '../../card/card';
+import CardList from '../../card/card';
 import NavbarTop from '../Nav/Nav'
 
 class Dashboard extends Component {
@@ -25,7 +25,7 @@ class Dashboard extends Component {
             </div>
             <div class="card xl">
               <h2>Current Projects</h2>
-              <CardDesign />
+              <CardList />
               <ul class="keys">
                 <li class="indicator"></li>
                 <li class="indicator"></li>

@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
 import classnames from "classnames";
 
+
 class Register extends Component {
   constructor() {
     super();
@@ -24,7 +25,12 @@ class Register extends Component {
     }
   }
 
+
   componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+
     if (nextProps.errors) {
       this.setState({
         errors: nextProps.errors
@@ -47,7 +53,7 @@ class Register extends Component {
       password2: this.state.password2
     };
 
-    this.props.registerUser(newUser, this.props.history);
+    this.props.registerUser(newUser);
   };
 
   render() {
@@ -91,9 +97,7 @@ class Register extends Component {
                   error={errors.email}
                   id="email"
                   type="email"
-                  className={classnames("", {
-                    invalid: errors.email
-                  })}
+                  className={{invalid: errors.email}}
                 />
                 <label htmlFor="email">Email</label>
                 <span className="red-text">{errors.email}</span>
@@ -105,9 +109,7 @@ class Register extends Component {
                   error={errors.password}
                   id="password"
                   type="password"
-                  className={classnames("", {
-                    invalid: errors.password
-                  })}
+                  className={{invalid: errors.password}}
                 />
                 <label htmlFor="password">Password</label>
                 <span className="red-text">{errors.password}</span>

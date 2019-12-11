@@ -1,7 +1,7 @@
 import api from "../utils/api"
 
 
-import { SEARCH_BOOKS, GET_BOOK_DETAIL, GET_ERRORS, SET_BOOK_DETAIL } from "./types";
+import { SEARCH_BOOKS, GET_ERRORS, SET_BOOK_DETAIL } from "./types";
 
 // TODO
 
@@ -11,13 +11,13 @@ export const searchBooks = (searchStr) => dispatch => {
       .then(res => 
         dispatch({
             type: SEARCH_BOOKS,
-            payload: res
+            payload: res.data.data
         })
         )
       .catch(err =>
         dispatch({
           type: GET_ERRORS,
-          payload: err.response.data
+          payload: err
         })
       );
   };
@@ -28,7 +28,7 @@ export const searchBooks = (searchStr) => dispatch => {
       .then(res => 
         dispatch({
             type: SET_BOOK_DETAIL,
-            payload: res
+            payload: res.data.data
         })
         )
       .catch(err =>

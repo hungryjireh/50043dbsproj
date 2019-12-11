@@ -54,3 +54,9 @@ KindleMetadata.bson
 dump.sql
 DBSProject.pem
 .DS_Store
+deployment_share/hdfs_spark/*.pem
+deployment_share/hdfs_spark/*.zip
+deployment_share/hdfs_spark/*.txt
+deployment_share/hdfs_spark/deprecated
+deployment_share/hdfs_spark/*.csv
+deployment_share/hdfs_spark/.DS_Store

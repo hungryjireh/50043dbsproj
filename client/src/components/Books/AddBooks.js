@@ -1,13 +1,4 @@
 import React, { Component } from "react";
-import Navbar from '../layout/Navbar'
-import NavbarTop from '../Nav/Nav'
-
-const divStyle = {
-    height: '100vh',
-    width:'80%',
-    padding: '7rem',
-    float: 'right'
-}
 
 const uploadImage = {
     width: '200px', 
@@ -107,31 +98,27 @@ class AddBooks extends Component {
 
     render() {
         return (
-            <div>
-                <NavbarTop />
-                <Navbar />
-                <div style={divStyle} className="addBooks"> 
-                    <div style={{textAlign:'center'}}>
-                        <img style={uploadImage} src={this.state.image}/>
-                    </div>
-                    <form onSubmit={this.handleSubmit}>
-                        <div style={display}>
-                            <input style= {{textAlign:'center'}} name= "image" type="file" onChange={(evt) => this.handleImage(evt)}/>
-                        <br></br>
-                        </div>
-                        {/* <label htmlFor="book_id">BookID</label>
-                        <input ref="bookid" onChange={(evt) => this.handleChange(evt)} id="book_id" name="book_id" type="text" /> */}
-                        <label htmlFor="title">Book Title</label>
-                            <input ref="title" name="title" type="text" onChange={(evt) => this.handleTitle(evt)}/>
-                        <label htmlFor="description">Description</label>
-                            <textarea ref="description" name="description" type="text" onChange={(evt) => this.handleDescription(evt)}/>
-                        <label htmlFor="rating">Price</label>
-                            <input ref="price" id="price" name="price" type="text" onChange={(evt) => this.handlePrice(evt)}/>
-                        {/* <input ref="date" type="hidden" id="date" name="date" value={this.state.date}></input> */}
-                            <input ref="token" type="hidden" id="token" name="token" value={this.state.token}></input>
-                        <button class="btn draw-border">ADD BOOK</button>
-                    </form>
+            <div className="col container">
+                <div style={{textAlign:'center'}}>
+                    <img style={uploadImage} src={this.state.image}/>
                 </div>
+                <form onSubmit={this.handleSubmit}>
+                    <div style={display}>
+                        <input style= {{textAlign:'center'}} name= "image" type="file" onChange={(evt) => this.handleImage(evt)}/>
+                    <br></br>
+                    </div>
+                    {/* <label htmlFor="book_id">BookID</label>
+                    <input ref="bookid" onChange={(evt) => this.handleChange(evt)} id="book_id" name="book_id" type="text" /> */}
+                    <label htmlFor="title">Book Title</label>
+                        <input ref="title" name="title" type="text" onChange={(evt) => this.handleTitle(evt)}/>
+                    <label htmlFor="description">Description</label>
+                        <textarea ref="description" name="description" type="text" onChange={(evt) => this.handleDescription(evt)}/>
+                    <label htmlFor="rating">Price</label>
+                        <input ref="price" id="price" name="price" type="text" onChange={(evt) => this.handlePrice(evt)}/>
+                    {/* <input ref="date" type="hidden" id="date" name="date" value={this.state.date}></input> */}
+                        <input ref="token" type="hidden" id="token" name="token" value={this.state.token}></input>
+                    <button class="btn draw-border">ADD BOOK</button>
+                </form>
             </div>
         )
     }

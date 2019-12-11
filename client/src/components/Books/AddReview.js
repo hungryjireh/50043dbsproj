@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import './addreview.scss'
-import NavbarTop from '../Nav/Nav'
-import Navbar from '../layout/Navbar'
 
 
 
@@ -83,9 +80,7 @@ class AddReview extends Component {
     render() {
         return (
             <div>
-                <Navbar />
-                <NavbarTop />
-                <div className="addreview"> 
+                <div className="col container">
                     <div>
                         <h1 style={{textAlign: 'center'}}>Add a book review for your favourite book</h1>
                     </div>

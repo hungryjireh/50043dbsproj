@@ -12,6 +12,6 @@ const AddBook = new Schema({
     "image": { type: String },
 });
 
-const AddNewBook = mongoDBconnection.model("AddNewBook", AddBook);
+const AddNewBook = mongoDBconnection.model("AddNewBook", AddBook, 'addnewbook');
 // const AddNewBook = mongoDBconnection.model("AddNewBookTest", AddBook);
 module.exports = AddNewBook;

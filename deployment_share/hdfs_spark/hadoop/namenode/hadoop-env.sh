@@ -52,7 +52,6 @@
 # The java implementation to use. By default, this environment
 # variable is REQUIRED on ALL platforms except OS X!
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.222.b10-0.amzn2.0.1.x86_64/jre
-
 # Location of Hadoop.  By default, Hadoop will attempt to determine
 # this location based upon its execution path.
 # export HADOOP_HOME=
@@ -94,7 +93,7 @@ export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.222.b10-0.amzn2.0.1.x86_6
 # Some parts of the shell code may do special things dependent upon
 # the operating system.  We have to set this here. See the next
 # section as to why....
-export HADOOP_OS_TYPE=${HADOOP_OS_TYPE:-$(uname -s)}
+# export HADOOP_OS_TYPE=${HADOOP_OS_TYPE:-$(uname -s)}
 
 # Extra Java runtime options for some Hadoop commands
 # and clients (i.e., hdfs dfs -blah).  These get appended to HADOOP_OPTS for

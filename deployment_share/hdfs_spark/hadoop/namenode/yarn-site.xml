@@ -30,8 +30,37 @@
 </configuration> -->
 
 <configuration>
+  <property>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce_shuffle</value>
+  </property>
+  <property>
+    <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+    <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+  </property>
+  <property>
+    <name>yarn.resourcemanager.scheduler.address</name>
+    <value>node-master:8030</value>
+  </property>
+  <property>
+    <name>yarn.resourcemanager.address</name>
+    <value>node-master:8032</value>
+  </property>
+  <property>
+    <name>yarn.resourcemanager.webapp.address</name>
+    <value>node-master:8088</value>
+  </property>
+  <property>
+    <name>yarn.resourcemanager.resource-tracker.address</name>
+    <value>node-master:8031</value>
+  </property>
+  <property>
+    <name>yarn.resourcemanager.admin.address</name>
+    <value>node-master:8033</value>
+  </property>
+</configuration>
 
-<!-- Site specific YARN configuration properties -->
+<!-- <configuration>
     <property>
             <name>yarn.acl.enable</name>
             <value>0</value>
@@ -46,4 +75,44 @@
             <name>yarn.nodemanager.aux-services</name>
             <value>mapreduce_shuffle</value>
     </property>
-</configuration>
+    <property>
+       <name>yarn.resourcemanager.scheduler.address</name>
+       <value><nnode>:8030</value>
+    </property>
+    <property>
+       <name>yarn.resourcemanager.address</name>
+       <value><nnode>:8032</value>
+    </property>
+    <property>
+       <name>yarn.resourcemanager.webapp.address</name>
+       <value><nnode>:8088</value>
+    </property>
+    <property>
+       <name>yarn.resourcemanager.resource-tracker.address</name>
+       <value><nnode>:8031</value>
+    </property>
+    <property>
+       <name>yarn.resourcemanager.admin.address</name>
+       <value><nnode>:8033</value>
+    </property> 
+</configuration> -->
+
+    <!-- <property>
+            <name>yarn.scheduler.maximum-allocation-mb</name>
+            <value>2046</value>
+    </property>
+
+    <property>
+            <name>yarn.nodemanager.resource.memory-mb</name>
+            <value>2046</value>
+    </property>
+
+    <property>
+            <name>mapreduce.map.memory.mb</name>
+            <value>682</value>
+    </property>
+
+    <property>
+            <name>mapreduce.reduce.memory.mb</name>
+            <value>1364</value>
+    </property> -->

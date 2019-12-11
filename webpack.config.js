@@ -2,7 +2,7 @@ const path = require('path');
 const Dotenv = require('dotenv-webpack');
 
 const SRC_DIR = path.join(__dirname, '/client/src');
-const DIST_DIR = path.join(__dirname, '/client/dist');
+const DIST_DIR = path.join(__dirname, '/dist');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
@@ -13,6 +13,7 @@ module.exports = {
   entry: { main: `${SRC_DIR}/index.js` },
   output: {
     path: DIST_DIR,
+    publicPath: '/',
     filename: 'bundle.js'
   },
   module: {

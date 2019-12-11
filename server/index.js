@@ -13,7 +13,9 @@ const port = process.env.PORT || 5000;
 
 // Server configuration
 
-const app = express();
+const app = express(),
+    DIST_DIR = `${__dirname}/../dist`,
+    HTML_FILE = DIST_DIR + '/index.html'
 app.server = http.createServer(app);
 
 // DB configuration
@@ -32,7 +34,14 @@ app.use(cors());
 app.use(bodyParser.json({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(express.static(`${__dirname}/../client/dist`));
+app.use(express.static(DIST_DIR));
+// app.get('/*', function(req, res) {
+//     res.sendFile(HTML_FILE, function(err) {
+//         if (err) {
+//             res.status(500).send(err)
+//         }
+//     })
+// })
 
 // Passport middleware
 const passport = require("passport");

@@ -15,6 +15,6 @@ const StoreSchema = new Schema({
     "categories":{ type: [[String]] }
 });
 
-const Store = mongoDBconnection.model("store", StoreSchema);
+const Store = mongoDBconnection.model("store", StoreSchema, 'store');
 // const Store = mongoDBconnection.model("storeTest", StoreSchema);
 module.exports = Store;

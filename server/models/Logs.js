@@ -14,6 +14,6 @@ const LogSchema = new Schema({
     "response" : { type: Object }
 });
 
-const Logs = mongoDBLogsConnection.model("logs", LogSchema);
+const Logs = mongoDBLogsConnection.model("logs", LogSchema, 'logs');
 
 module.exports = Logs;

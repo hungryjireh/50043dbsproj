@@ -1,45 +1,61 @@
 import React, { Component } from "react";
 import './Dashboard.scss'
-import Navbar from "../../layout/Navbar";
-import CardDesign from '../../card/card'
-import NavbarTop from '../../Nav/Nav'
+import CardList from '../../card/card'
+import { searchBooks } from "../../../actions/bookActions";
+import {connect} from "react-redux";
+
+
 
 class Dashboard extends Component {
-  onLogoutClick = e => {
-    e.preventDefault();
-    this.props.logoutUser();
-  };
+
+    componentDidMount() {
+        this.props.searchBooks(" ")
+    }
+
+  handleInputChange = () => {
+      if (this.search.value.length > 2) {
+          this.props.searchBooks(this.search.value)
+      }
+  }
+
 
   render() {
 
     return (
-      <div>
-        <NavbarTop />
-        <Navbar />
-        <div class="dashboard">
-          <div>
-            <h1>Books<span class="highlight">.</span></h1>
+        <div className="container col">
+          <div className="row center">
+            <h1>Books<span className="highlight">.</span></h1>
             <p>Finding my favourite book</p>
           </div>
-          <CardDesign />
+
+          <div className="col search">
+
+              <form className="row">
+                  <div className="input-field">
+                      <i className="material-icons prefix">search</i>
+                      <input id="searchBookInput" type="text" autoComplete="false"
+                             onChange={this.handleInputChange}
+                             ref={input => this.search = input}
+                      />
+                      <label htmlFor="searchBookInput">Search book</label>
+                  </div>
+              </form>
+
+
+            </div>
+
+          <div className="search-results">
+              <CardList />
+          </div>
+
+
         </div>
-      </div>
     );
   }
 }
+const mapStateToProps = state => ({})
 
-// Dashboard.propTypes = {
-//   logoutUser: PropTypes.func.isRequired,
-//   auth: PropTypes.object.isRequired
-// };
-
-// const mapStateToProps = state => ({
-//   auth: state.auth
-// });
-
-// export default connect(
-//   mapStateToProps,
-//   { logoutUser }
-// )(Dashboard);
-
-export default Dashboard
+export default connect(
+    mapStateToProps,
+    { searchBooks }
+)(Dashboard);

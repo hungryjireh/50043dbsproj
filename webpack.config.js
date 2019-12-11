@@ -13,6 +13,7 @@ module.exports = {
   entry: { main: `${SRC_DIR}/index.js` },
   output: {
     path: DIST_DIR,
+    publicPath: '/',
     filename: 'bundle.js'
   },
   module: {

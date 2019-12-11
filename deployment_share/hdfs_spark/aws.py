@@ -23,7 +23,6 @@ def list_ec2_instances(ec2):
     for r in res['Reservations']:
         for ins in r['Instances']:
             if ins['State']['Name'] == 'running':
-                print(ins)
                 instances[ins['InstanceId']] = ins['PublicIpAddress']
     return instances
 
@@ -142,15 +141,20 @@ def create_security_group(ec2, vpc_id, security_group_name, description):
                 'FromPort': 9000,
                 'ToPort': 9000,
                 'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
-                #SPARK
+                #HADOOP
                 {'IpProtocol': 'tcp',
-                'FromPort': 8080,
-                'ToPort': 8080,
+                'FromPort': 9870,
+                'ToPort': 9870,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                #HADOOP
+                {'IpProtocol': 'tcp',
+                'FromPort': 8088,
+                'ToPort': 8088,
                 'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
                 #SPARK
                 {'IpProtocol': 'tcp',
-                'FromPort': 8081,
-                'ToPort': 8081,
+                'FromPort': 8080,
+                'ToPort': 8083,
                 'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
                 #SPARK
                 {'IpProtocol': 'tcp',
@@ -215,9 +219,10 @@ def get_vpc_info(ec2, key):
     return vpc_info
 
 # deploy an instance with an input image_id and return the IP addresses 
-def deploy_instance(ec2, image_id, ip_filename, dns_filename, private_ip_filename):
-    response = ec2.run_instances(ImageId=image_id, MinCount=1, MaxCount=1, InstanceType='t2.micro', SecurityGroupIds=[get_security_groupid(ec2, "AUTOMATED_MONGO")], KeyName="50043",
-    TagSpecifications=[
+def deploy_instance(ec2, image_id, ip_filename, dns_filename, private_ip_filename, private_key_file, instance_size):
+    private_key = private_key_file.split('.')[0]
+    response = ec2.run_instances(ImageId=image_id, MinCount=1, MaxCount=1, InstanceType=instance_size, SecurityGroupIds=[get_security_groupid(ec2, "AUTOMATED_MONGO")], KeyName=private_key,
+        TagSpecifications=[
         {
             'ResourceType': 'instance',
             'Tags': [
@@ -260,15 +265,56 @@ def allocate_ip_address(ec2, instance_id):
     except ClientError as e:
         print(e)
 
-def deploy_hadoop_cluster(ec2, num_nodes, private_key_file):
+def deploy_mysql(ec2, private_key_file, instance_size):
     empty_img = get_image(ec2, "clean_instance")
-    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'hadoop/hadoop_namenode_ipaddress.txt', 'hadoop/hadoop_namenode_dns.txt', 'hadoop/hadoop_namenode_privateipaddress.txt')
+    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'mysql_ipaddress.txt', 'mysql_dns.txt', 'mysql_privateipaddress.txt', private_key_file, instance_size)
+    protect_key_file = "chmod 400 " + private_key_file
+    os.system(protect_key_file)
+    permissions_script = "chmod 755 deployment_mysql.sh"
+    os.system(permissions_script)
+    deploy_command = "./deployment_mysql.sh " + private_key_file
+    print(deploy_command)
+    time.sleep(30)
+    os.system(deploy_command)
+    return "MySQL deployed."
+
+def deploy_mongodb(ec2, private_key_file, instance_size):
+    empty_img = get_image(ec2, "clean_instance")
+    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'mongodb_ipaddress.txt', 'mongodb_dns.txt', 'mongodb_privateipaddress.txt', private_key_file, instance_size)
+    protect_key_file = "chmod 400 " + private_key_file
+    os.system(protect_key_file)
+    permissions_script = "chmod 755 deployment_mongodb.sh"
+    os.system(permissions_script)
+    deploy_command = "./deployment_mongodb.sh " + private_key_file
+    print(deploy_command)
+    time.sleep(30)
+    os.system(deploy_command)
+    return "MongoDB deployed."
+
+def deploy_nodejs(ec2, private_key_file, instance_size):
+    empty_img = get_image(ec2, "clean_instance")
+    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'nodejs_ipaddress.txt', 'nodejs_dns.txt', 'nodejs_privateipaddress.txt', private_key_file, instance_size)
+    protect_key_file = "chmod 400 " + private_key_file
+    os.system(protect_key_file)
+    permissions_script = "chmod 755 deployment_nodejs.sh"
+    os.system(permissions_script)
+    deploy_command = "./deployment_nodejs.sh " + private_key_file
+    print(deploy_command)
+    time.sleep(30)
+    os.system(deploy_command)
+    return "NodeJS deployed."
+
+def deploy_hadoop_cluster(ec2, num_nodes, private_key_file, instance_size):
+    empty_img = get_image(ec2, "clean_instance")
+    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'hadoop/hadoop_namenode_ipaddress.txt', 'hadoop/hadoop_namenode_dns.txt', 'hadoop/hadoop_namenode_privateipaddress.txt', private_key_file, instance_size)
     for i in range(1, num_nodes + 1):
         ipaddress_filename = "hadoop/hadoop_datanode_ipaddress_" + str(i) + ".txt"
         dns_filename = "hadoop/hadoop_datanode_dns_" + str(i) + ".txt"
         private_ipaddress_filename = "hadoop/hadoop_datanode_privateipaddress_" + str(i) + ".txt"
-        deploy_ins = deploy_instance(ec2, empty_img['image_id'], ipaddress_filename, dns_filename, private_ipaddress_filename)
+        deploy_ins = deploy_instance(ec2, empty_img['image_id'], ipaddress_filename, dns_filename, private_ipaddress_filename, private_key_file, instance_size)
     os.system('zip -r9 hadoop.zip hadoop')
+    protect_key_file = "chmod 400 " + private_key_file
+    os.system(protect_key_file)
     deploy_command = "./deployment_hadoop.sh " + str(num_nodes) + " " + private_key_file
     os.system(deploy_command)
     return "Hadoop cluster with {} nodes deployed.".format(str(num_nodes))
@@ -276,7 +322,7 @@ def deploy_hadoop_cluster(ec2, num_nodes, private_key_file):
 if __name__ == "__main__":
     user_df = pd.read_csv('credentials.csv')
     user_cred = user_df.iloc[0]
-    ec2 = new_session('ec2', user_cred['Access key ID'], user_cred['Secret access key'], 'us-east-1')
+    ec2 = new_session('ec2', user_cred['Access key ID'], user_cred['Secret access key'], sys.argv[4])
     vpc_id = get_vpc_info(ec2, "VpcId")
     try:
         create_security_group(ec2, vpc_id[0], "AUTOMATED_MONGO", "Security group for automated Mongo")
@@ -284,9 +330,19 @@ if __name__ == "__main__":
         delete_security_group(ec2, "AUTOMATED_MONGO")
         create_security_group(ec2, vpc_id[0], "AUTOMATED_MONGO", "Security group for automated Mongo")
     # CREATE IMAGE
-    save_image(ec2, list(list_ec2_instances(ec2).keys())[0], 'clean_instance', 'clean_instance')
+    try:
+        save_image(ec2, list(list_ec2_instances(ec2).keys())[0], 'clean_instance', 'clean_instance')
+    except:
+        print("AMI image already saved. Deploying...")
     # DEPLOY HADOOP
-    print(deploy_hadoop_cluster(ec2, int(sys.argv[1]), sys.argv[2]))
+    #print(deploy_hadoop_cluster(ec2, int(sys.argv[1]), sys.argv[2], sys.argv[3]))
+    # DEPLOY MYSQL
+    #print(deploy_mysql(ec2, sys.argv[2], sys.argv[3]))
+    # DEPLOY MONGODB
+    #print(deploy_mongodb(ec2, sys.argv[2], sys.argv[3]))
+    # DEPLOY NODEJS
+    print(deploy_nodejs(ec2, sys.argv[2], sys.argv[3]))
+
 
 # DEPLOY MONGODB AND MYSQL
 # empty_img = get_image(ec2, "empty_instance")

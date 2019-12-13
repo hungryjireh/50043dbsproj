@@ -5,10 +5,10 @@ import api from "../utils/api"
 import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
 
 // Register User
-export const registerUser = (userData) => dispatch => {
+export const registerUser = (userData, history) => dispatch => {
   api
     .post("/api/users/register", userData)
-    .then(res => dispatch(loginUser(userData)))
+    .then(res => history.push("/login"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

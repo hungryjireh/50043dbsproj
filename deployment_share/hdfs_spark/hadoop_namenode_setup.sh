@@ -32,6 +32,7 @@ NAMENODE_PRIVATE_IP=$(cat "hadoop/hadoop_namenode_privateipaddress.txt")
 
 echo "" >> hadoop/namenode/hosts
 echo "${NAMENODE_PRIVATE_IP} node-master" >> hadoop/namenode/hosts
+echo "${NAMENODE_PRIVATE_IP}" > hadoop/namenode/masters
 for ((i=1;i<=$1;i++)); do 
     DATANODE_PRIVATE_IP=$(cat "hadoop/hadoop_datanode_privateipaddress_$i.txt")
     echo "${DATANODE_PRIVATE_IP} node$i" >> hadoop/namenode/hosts
@@ -62,6 +63,7 @@ sudo mv hadoop/namenode/core-site.xml server/hadoop-3.1.2/etc/hadoop/core-site.x
 sudo mv hadoop/namenode/mapred-site.xml server/hadoop-3.1.2/etc/hadoop/mapred-site.xml
 sudo mv hadoop/namenode/yarn-site.xml server/hadoop-3.1.2/etc/hadoop/yarn-site.xml
 sudo mv hadoop/namenode/workers server/hadoop-3.1.2/etc/hadoop/workers
+sudo mv hadoop/namenode/masters server/hadoop-3.1.2/etc/hadoop/masters
 sudo mv hadoop/namenode/hosts /etc/hosts
 sudo mv hadoop/namenode/.profile server/hadoop-3.1.2/.profile
 sudo mv hadoop/namenode/.bashrc server/hadoop-3.1.2/.bashrc

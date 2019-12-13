@@ -44,4 +44,18 @@
             <name>mapreduce.reduce.env</name>
             <value>HADOOP_MAPRED_HOME=$HADOOP_HOME</value>
     </property>
+    <property>
+        <name>yarn.app.mapreduce.am.resource.mb</name>
+        <value>1364</value>
+    </property>
+
+    <property>
+            <name>mapreduce.map.memory.mb</name>
+            <value>682</value>
+    </property>
+
+    <property>
+            <name>mapreduce.reduce.memory.mb</name>
+            <value>1364</value>
+    </property>
 </configuration>

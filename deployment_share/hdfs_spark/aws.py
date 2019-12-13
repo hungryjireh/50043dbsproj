@@ -143,13 +143,53 @@ def create_security_group(ec2, vpc_id, security_group_name, description):
                 'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
                 #HADOOP
                 {'IpProtocol': 'tcp',
+                'FromPort': 9001,
+                'ToPort': 9001,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                #HADOOP
+                {'IpProtocol': 'tcp',
                 'FromPort': 9870,
                 'ToPort': 9870,
                 'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
                 #HADOOP
                 {'IpProtocol': 'tcp',
+                'FromPort': 50030,
+                'ToPort': 50030,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                #HADOOP
+                {'IpProtocol': 'tcp',
+                'FromPort': 50060,
+                'ToPort': 50060,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                #HADOOP
+                {'IpProtocol': 'tcp',
+                'FromPort': 50070,
+                'ToPort': 50070,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                #HADOOP
+                {'IpProtocol': 'tcp',
+                'FromPort': 50075,
+                'ToPort': 50075,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                #HADOOP
+                {'IpProtocol': 'tcp',
+                'FromPort': 50095,
+                'ToPort': 50095,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                #HADOOP
+                {'IpProtocol': 'tcp',
+                'FromPort': 8032,
+                'ToPort': 8032,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                #HADOOP
+                {'IpProtocol': 'tcp',
                 'FromPort': 8088,
                 'ToPort': 8088,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                #HADOOP
+                {'IpProtocol': 'tcp',
+                'FromPort': 8042,
+                'ToPort': 8042,
                 'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
                 #SPARK
                 {'IpProtocol': 'tcp',
@@ -324,6 +364,7 @@ if __name__ == "__main__":
     user_cred = user_df.iloc[0]
     ec2 = new_session('ec2', user_cred['Access key ID'], user_cred['Secret access key'], sys.argv[4])
     vpc_id = get_vpc_info(ec2, "VpcId")
+    print("VPC ID: {}".format(str(vpc_id)))
     try:
         create_security_group(ec2, vpc_id[0], "AUTOMATED_MONGO", "Security group for automated Mongo")
     except:
@@ -334,14 +375,14 @@ if __name__ == "__main__":
         save_image(ec2, list(list_ec2_instances(ec2).keys())[0], 'clean_instance', 'clean_instance')
     except:
         print("AMI image already saved. Deploying...")
-    # DEPLOY HADOOP
-    #print(deploy_hadoop_cluster(ec2, int(sys.argv[1]), sys.argv[2], sys.argv[3]))
+    # DEPLOY HADOOP/SPARK
+    print(deploy_hadoop_cluster(ec2, int(sys.argv[1]), sys.argv[2], sys.argv[3]))
     # DEPLOY MYSQL
     #print(deploy_mysql(ec2, sys.argv[2], sys.argv[3]))
     # DEPLOY MONGODB
     #print(deploy_mongodb(ec2, sys.argv[2], sys.argv[3]))
     # DEPLOY NODEJS
-    print(deploy_nodejs(ec2, sys.argv[2], sys.argv[3]))
+    #print(deploy_nodejs(ec2, sys.argv[2], sys.argv[3]))
 
 
 # DEPLOY MONGODB AND MYSQL

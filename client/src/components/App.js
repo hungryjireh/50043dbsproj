@@ -17,7 +17,6 @@ import Review from "./Books/Review";
 import AddReview from "./Books/AddReview";
 import AddBooks from "./Books/AddBooks";
 
-import Navbar from "./layout/Navbar";
 
 
 
@@ -43,31 +42,24 @@ if (localStorage.jwtToken) {
 class App extends Component {
   render() {
     return (
-        <Provider store={store}>
-          <Router>
+      <Provider store={store}>
+        <Router>
+          <div className="App">
             <Switch>
               <Route exact path="/" component={Landing} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/getbooks" component={Store} />
+              <Route exact path="/addbooks" component={AddBooks} />
+              <Route exact path="/addreview" component={AddReview} />
+              <Route exact path="/book/:asin" component={Review} />
 
-              <Route path="/" >
-                <div className="page-wrapper">
-                  <Navbar />
 
-
-                  <main id="content" style={{paddingLeft: 260+"px"}}>
-                    <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                    <Route path="/getbooks" component={Store} />
-                    <Route path="/addbooks" component={AddBooks} />
-                    <Route path="/addreview" component={AddReview} />
-                    <Route path="/book/:asin" component={Review} />
-                  </main>
-                </div>
-              </Route>
-
+              <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>
-          </Router>
-        </Provider>
+          </div>
+        </Router>
+      </Provider>
     );
   }
 }

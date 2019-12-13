@@ -11,7 +11,7 @@ export const getBookReviews = (bookID) => dispatch => {
       .then(res => 
         dispatch({
             type: SET_BOOK_REVIEWS,
-            payload: res.data
+            payload: res
         })
         )
       .catch(err =>

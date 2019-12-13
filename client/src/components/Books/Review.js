@@ -1,56 +1,78 @@
 import React, { Component } from "react";
-import {getBookReviews} from "../../actions/reviewActions";
-import {connect} from "react-redux";
-import {getBookDetail} from "../../actions/bookActions";
 import AddReview from "./AddReview";
 
 class Review extends Component {
     constructor(props) {
         super(props);
-
-        this.props.getBookDetail(this.props.match.params.asin)
-        this.props.getBookReviews(this.props.match.params.asin)
-
+        this.state = {
+          review_content: [],
+          book_content: {},
+          asin: this.props.match.params.asin
+        };
       };
     
-    render() {
-        if (this.props.bookDetail === null){
-            return ""
-        }
+      componentDidMount() {
+        this.getDataFromDbReview();
+        this.getDataFromDbBook();
+      };
+    
+      getDataFromDbReview = () => {
+        fetch('http://localhost:5000/api/review/'+this.state.asin)
+          .then(data => data.json())
+          .then(res => this.setState({review_content: res}));
+      };
 
-        const { asin, title, imUrl, categories, description } = this.props.bookDetail;
+      getDataFromDbBook = () => {
+        fetch('http://localhost:5000/api/store/book/'+this.state.asin)
+          .then(data => data.json())
+          .then(res => this.setState({book_content: res.data}));
+      };
+      
+    
+    render() {
+       console.log(this.state.book_content)
+
+        const review_content = this.state.review_content
+        const book_content = this.state.book_content
 
         return (
-            <div>
-                <div className="card horizontal">
-                    <div className="card-image">
-                        <img src={imUrl} alt="book image"/>
-                    </div>
-
-                    <div className="card-stacked">
-                        <div className="card-title">Title: {title} ({asin})</div>
-                        <div className="card-title">Categories: <br/>{ categories}</div>
-                        <div className="card-content">Description: <br/> {description}</div>
-                    </div>
-                </div>
-                <AddReview/>
-                <div>
-                    Reviews: <br/>
-                    {this.props.bookReviews}
-                </div>
+            <div> 
+              <div style={{textAlign:'center'}}>
+                <img src={book_content.imUrl} />
+              </div>
+              <div style={{paddingLeft: '50px', paddingRight: '50px'}}>
+                <p>{book_content.description}</p>
+                {Object
+                .keys(review_content)
+                .map(key => <Card key={key} index={key} details={review_content[key]}/>)}
+              </div>
+              <AddReview />
             </div>
-
         )
     }
 }
 
+class CardBody extends React.Component {
+    render() {
+      const { reviewText } = this.props;
+      return (
+        <div className="card-body">
+            <div>
+                <p>{reviewText}</p>
+            </div>
+        </div>
+      )
+    }
+  }
 
-const mapStateToProps = state => ({
-    bookReviews: state.reviews.bookReviews,
-    bookDetail: state.reviews.bookDetail
-})
+class Card extends React.Component {
+    render() {
+      return (
+        <div>
+          <CardBody index={this.props.index} reviewText={this.props.details.reviewText} />
+        </div>
+      )
+    }
+}
 
-export default connect(
-    mapStateToProps,
-    { getBookDetail, getBookReviews }
-)(Review);
+export default Review

@@ -57,6 +57,9 @@ DBSProject.pem
 deployment_share/hdfs_spark/*.pem
 deployment_share/hdfs_spark/*.zip
 deployment_share/hdfs_spark/*.txt
+deployment_share/hdfs_spark/hadoop/*.txt
 deployment_share/hdfs_spark/deprecated
 deployment_share/hdfs_spark/*.csv
 deployment_share/hdfs_spark/.DS_Store
+server/.DS_Store
+server/routes/.DS_Store

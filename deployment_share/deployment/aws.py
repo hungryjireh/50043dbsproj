@@ -233,6 +233,139 @@ def create_security_group(ec2, vpc_id, security_group_name, description):
     except ClientError as e:
         print(e)
 
+# create a security group with associated permissions for MongoDB
+def create_mongo_security_group(ec2, vpc_id, security_group_name, description):
+    try:
+        response = ec2.create_security_group(GroupName=security_group_name,
+                                            Description=description,
+                                            VpcId=vpc_id)
+        security_group_id = response['GroupId']
+        print('Security Group Created %s in vpc %s.' % (security_group_id, vpc_id))
+
+        data = ec2.authorize_security_group_ingress(
+            GroupId=security_group_id,
+            IpPermissions=[
+                #MONGODB
+                {'IpProtocol': 'tcp',
+                'FromPort': 27017,
+                'ToPort': 27017,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                 {'IpProtocol': 'tcp',
+                'FromPort': 80,
+                'ToPort': 80,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                {'IpProtocol': 'tcp',
+                'FromPort': 22,
+                'ToPort': 22,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                {'IpProtocol': 'icmp',
+                'FromPort': -1,
+                'ToPort': -1,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]}
+            ])
+        print('Ingress Successfully Set %s' % data)
+    except ClientError as e:
+        print(e)
+
+# create a security group with associated permissions for MySQL
+def create_mysql_security_group(ec2, vpc_id, security_group_name, description):
+    try:
+        response = ec2.create_security_group(GroupName=security_group_name,
+                                            Description=description,
+                                            VpcId=vpc_id)
+        security_group_id = response['GroupId']
+        print('Security Group Created %s in vpc %s.' % (security_group_id, vpc_id))
+
+        data = ec2.authorize_security_group_ingress(
+            GroupId=security_group_id,
+            IpPermissions=[
+                #MYSQL
+                {'IpProtocol': 'tcp',
+                'FromPort': 3306,
+                'ToPort': 3306,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                 {'IpProtocol': 'tcp',
+                'FromPort': 80,
+                'ToPort': 80,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                {'IpProtocol': 'tcp',
+                'FromPort': 22,
+                'ToPort': 22,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                {'IpProtocol': 'icmp',
+                'FromPort': -1,
+                'ToPort': -1,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]}
+            ])
+        print('Ingress Successfully Set %s' % data)
+    except ClientError as e:
+        print(e)
+
+# create a security group with associated permissions for NodeJS
+def create_nodejs_security_group(ec2, vpc_id, security_group_name, description):
+    try:
+        response = ec2.create_security_group(GroupName=security_group_name,
+                                            Description=description,
+                                            VpcId=vpc_id)
+        security_group_id = response['GroupId']
+        print('Security Group Created %s in vpc %s.' % (security_group_id, vpc_id))
+
+        data = ec2.authorize_security_group_ingress(
+            GroupId=security_group_id,
+            IpPermissions=[
+                 {'IpProtocol': 'tcp',
+                'FromPort': 80,
+                'ToPort': 80,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                {'IpProtocol': 'tcp',
+                'FromPort': 22,
+                'ToPort': 22,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                {'IpProtocol': 'icmp',
+                'FromPort': -1,
+                'ToPort': -1,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]}
+            ])
+        print('Ingress Successfully Set %s' % data)
+    except ClientError as e:
+        print(e)
+
+def obtain_ip_address(path):
+    with open(path) as f:
+        ip_add = f.read().strip()
+    return {'IpProtocol': 'tcp',
+    'FromPort': 0,
+    'ToPort': 65553,
+    'IpRanges': [{'CidrIp': ip_add}]}
+
+# create a security group with associated permissions for Hadoop
+def update_hadoop_security_group(ec2, security_group_name, num_nodes):
+    response = ec2.describe_security_groups()['SecurityGroups']
+    for item in response:
+        if item["GroupName"] == groupname:
+            ip_permissions = [
+            {'IpProtocol': 'tcp',
+                'FromPort': 80,
+                'ToPort': 80,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                {'IpProtocol': 'tcp',
+                'FromPort': 22,
+                'ToPort': 22,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                {'IpProtocol': 'icmp',
+                'FromPort': -1,
+                'ToPort': -1,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]}
+            ]
+            ip_permissions.append(obtain_ip_address('hadoop/hadoop_namenode_privateipaddress'))
+            for i in range(num_nodes):
+                path = 'hadoop/hadoop_datanode_privateipaddress_' + str(i + 1)
+                ip_permissions.append(obtain_ip_address(path))
+            data = ec2.authorize_security_group_ingress(
+            GroupId=item["GroupId"],
+            IpPermissions=ip_permissions)            
+            print(data)
+
 # delete a security group with the input security group name
 def delete_security_group(ec2, groupname):
     response = ec2.describe_security_groups()['SecurityGroups']
@@ -376,13 +509,13 @@ if __name__ == "__main__":
     except:
         print("AMI image already saved. Deploying...")
     # DEPLOY HADOOP/SPARK
-    #print(deploy_hadoop_cluster(ec2, int(sys.argv[1]), sys.argv[2], sys.argv[3]))
+    print(deploy_hadoop_cluster(ec2, int(sys.argv[1]), sys.argv[2], sys.argv[3]))
     # DEPLOY MYSQL
     print(deploy_mysql(ec2, sys.argv[2], sys.argv[3]))
     # DEPLOY MONGODB
     print(deploy_mongodb(ec2, sys.argv[2], sys.argv[3]))
     # DEPLOY NODEJS
-    #print(deploy_nodejs(ec2, sys.argv[2], sys.argv[3]))
+    print(deploy_nodejs(ec2, sys.argv[2], sys.argv[3]))
 
 
 # DEPLOY MONGODB AND MYSQL

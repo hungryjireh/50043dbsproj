@@ -13,5 +13,5 @@ ssh -o StrictHostKeyChecking=no -tt -i $1 ec2-user@$2 << EOF
     ./mysql_download.sh "$1"
     server/hadoop-3.1.2/bin/hdfs dfs -put mysql_download.csv /
     server/hadoop-3.1.2/bin/hdfs dfs -put mongodb_store_download.json /
-    exit
+    logout
 EOF

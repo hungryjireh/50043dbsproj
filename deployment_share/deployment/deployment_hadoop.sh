@@ -24,6 +24,10 @@ ssh -o StrictHostKeyChecking=no -tt -i $2 ec2-user@${NAMENODE_DNS} << EOF
     curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
     sudo rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
     sudo yum install -y yarn
+    sudo yum install python3-pip -y
+    python3 -m pip install --upgrade pip setuptools wheel --user
+    python3 -m pip install --user pandas
+    python3 -m pip install --user pyspark
     chmod 755 hadoop_namenode_setup.sh
     ./hadoop_namenode_setup.sh "$1" "$2"
     exit
@@ -51,6 +55,10 @@ EOF
         curl --silent --location https://dl.yarnpkg.com/rpm/yarn.repo | sudo tee /etc/yum.repos.d/yarn.repo
         sudo rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
         sudo yum install yarn -y
+        sudo yum install python3-pip -y
+        python3 -m pip install --upgrade pip setuptools wheel --user
+        python3 -m pip install --user pandas
+        python3 -m pip install --user pyspark
         chmod 755 hadoop_datanode_setup.sh
         ./hadoop_datanode_setup.sh "$1"
         chmod 755 spark_setup.sh
@@ -70,5 +78,7 @@ ssh -o StrictHostKeyChecking=no -tt -i $2 ec2-user@${NAMENODE_DNS} << EOF
     server/hadoop-3.1.2/bin/hdfs dfs -mkdir /spark-logs
     ./server/hadoop-3.1.2/spark/sbin/start-history-server.sh
     ./server/hadoop-3.1.2/spark/sbin/start-all.sh
+    source server/hadoop-3.1.2/.profile
+    source server/hadoop-3.1.2/.bashrc
     exit
 EOF

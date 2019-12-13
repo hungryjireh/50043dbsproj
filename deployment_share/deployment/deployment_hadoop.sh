@@ -80,5 +80,6 @@ ssh -o StrictHostKeyChecking=no -tt -i $2 ec2-user@${NAMENODE_DNS} << EOF
     ./server/hadoop-3.1.2/spark/sbin/start-all.sh
     source server/hadoop-3.1.2/.profile
     source server/hadoop-3.1.2/.bashrc
+    logout
     exit
 EOF

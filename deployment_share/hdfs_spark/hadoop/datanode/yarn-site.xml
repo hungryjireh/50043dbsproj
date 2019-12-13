@@ -39,6 +39,31 @@
     <value>org.apache.hadoop.mapred.ShuffleHandler</value>
   </property>
   <property>
+    <name>yarn.resourcemanager.hostname</name>
+    <value><nnode></value>
+  </property>
+  <property>
+        <name>mapreduce.jobtracker.address</name>
+        <value><nnode>:54311</value>
+    </property>
+  <property>
+        <name>yarn.nodemanager.resource.memory-mb</name>
+        <value>2046</value>
+  </property>
+  <property>
+          <name>yarn.scheduler.maximum-allocation-mb</name>
+          <value>2046</value>
+  </property>
+
+  <property>
+          <name>yarn.scheduler.minimum-allocation-mb</name>
+          <value>682</value>
+  </property>
+  <property>
+          <name>yarn.nodemanager.vmem-check-enabled</name>
+          <value>false</value>
+  </property>
+  <!-- <property>
     <name>yarn.resourcemanager.scheduler.address</name>
     <value>node-master:8030</value>
   </property>
@@ -58,6 +83,10 @@
     <name>yarn.resourcemanager.admin.address</name>
     <value>node-master:8033</value>
   </property>
+  <property>
+    <name>yarn.nodemanager.pmem-check-enabled</name>
+    <value>false</value>
+  </property> -->
 </configuration>
 
 <!-- <configuration>

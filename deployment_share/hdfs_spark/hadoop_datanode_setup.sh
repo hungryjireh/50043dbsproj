@@ -25,6 +25,7 @@ sed -i "s/<nnode>/${NAMENODE_DNS}/g" hadoop/datanode/core-site.xml
 
 echo "" >> hadoop/datanode/hosts
 echo "${NAMENODE_PRIVATE_IP} node-master" >> hadoop/datanode/hosts
+echo "${NAMENODE_PRIVATE_IP}" > hadoop/datanode/masters
 for ((i=1;i<=$1;i++)); do 
     DATANODE_DNS=$(cat "hadoop/hadoop_datanode_dns_$i.txt")
     DATANODE_PRIVATE_IP=$(cat "hadoop/hadoop_datanode_privateipaddress_$i.txt")
@@ -42,4 +43,5 @@ sudo mv hadoop/datanode/hosts /etc/hosts
 sudo mv hadoop/datanode/.profile server/hadoop-3.1.2/.profile
 sudo mv hadoop/datanode/.bashrc server/hadoop-3.1.2/.bashrc
 sudo mv hadoop/datanode/workers server/hadoop-3.1.2/etc/hadoop/workers
+sudo mv hadoop/datanode/masters server/hadoop-3.1.2/etc/hadoop/masters
 sudo mv id_rsa.pub .ssh

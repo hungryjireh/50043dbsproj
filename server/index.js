@@ -12,10 +12,10 @@ require('dotenv').config();
 const port = process.env.PORT || 5000;
 
 // Server configuration
-
+var path = require('path');
 const app = express(),
-    DIST_DIR = `${__dirname}/../dist`,
-    HTML_FILE = DIST_DIR + '/index.html'
+    DIST_DIR = path.resolve(__dirname, '../dist'),
+    HTML_FILE = path.resolve(DIST_DIR, 'index.html');
 app.server = http.createServer(app);
 
 // DB configuration
@@ -34,14 +34,8 @@ app.use(cors());
 app.use(bodyParser.json({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// Serve the static files from the React app
 app.use(express.static(DIST_DIR));
-// app.get('/*', function(req, res) {
-//     res.sendFile(HTML_FILE, function(err) {
-//         if (err) {
-//             res.status(500).send(err)
-//         }
-//     })
-// })
 
 // Passport middleware
 const passport = require("passport");
@@ -50,10 +44,19 @@ app.use(passport.initialize());
 // Passport config
 require("./config/passport")(passport);
 
-// Routes
+// An api endpoint
 app.use("/api/users", users);
 app.use("/api/store", store);
 app.use("/api/review", review);
+
+// Handles any requests that don't match the ones above
+app.get('/*', function(req, res) {
+    res.sendFile(HTML_FILE, function(err) {
+        if (err) {
+            res.status(500).send(err)
+        }
+    })
+})
 
 // Start server
 app.server.listen(port);

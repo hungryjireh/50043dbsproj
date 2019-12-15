@@ -23,19 +23,19 @@ class ListAllReview extends Component {
 
     componentDidMount() {
         api.get("/api/review/getallreview")
-          .then(res => this.setState({reviews: res.data.data}));
+          .then(res => this.setState({reviews: res.data}));
     }
 
     render() {
-        console.log('review ' + this.state.reviews)
       return (
         <div>
             <TopNav />
             <SideNav />
             <div style={divStyle}>
                 <table>
+                    <thead>
                     <tr>
-                        <th colspan="8">List of reviews added</th>
+                        <th colSpan="8">List of reviews added</th>
                     </tr>
                     <tr>
                         <td>Asin</td>
@@ -47,11 +47,16 @@ class ListAllReview extends Component {
                         <td>ReivewerName</td>
                         <td>Summary</td>
                     </tr>
-                    {
-                    Object
-                    .keys(this.state.reviews)
-                    .map(key => <Itemarray key={key} index={key} details={this.state.reviews[key]}/>)
+                    </thead>
+
+
+                    <tbody>
+                    {this.state.reviews.map(
+                        (index, key) => <Itemarray key={key} index={key} details={this.state.reviews[key]}/>)
                     }
+                    </tbody>
+
+
                 </table>
             </div>
         </div>

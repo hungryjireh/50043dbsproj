@@ -48,7 +48,7 @@ class AddBooks extends Component {
         const input = localStorage.jwtToken
         var token = input.split(" ");
         var token1 = token[1].slice(0,20);
-        console.log(token1)
+        // console.log(token1)
         this.setState({
             token : token1,
             title: '',

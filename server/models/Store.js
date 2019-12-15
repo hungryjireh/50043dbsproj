@@ -12,7 +12,8 @@ const StoreSchema = new Schema({
     "related": { type: [String] },
     "salesRank" : {},
     "brand" : { type: String },
-    "categories":{ type: [[String]] }
+    "categories":{ type: [[String]] },
+    "token" : { type: String }, //user ID
 });
 
 const Store = mongoDBconnection.model("store", StoreSchema, 'store');

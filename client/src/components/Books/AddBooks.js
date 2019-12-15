@@ -45,15 +45,16 @@ class AddBooks extends Component {
     };
 
     componentDidMount() {
-        let id = window.location.href.split("/").slice(-1)[0];
         const input = localStorage.jwtToken
         var token = input.split(" ");
         var token1 = token[1].slice(0,20);
         console.log(token1)
-        console.log(id)
         this.setState({
             token : token1,
-            book_id : id
+            title: '',
+            image: '',
+            price: '',
+            description: '',
         })
     }
 
@@ -64,16 +65,19 @@ class AddBooks extends Component {
           formData[field] = this.refs[field].value;
         }
         console.log(formData)
+        console.log(this.state)
 
         try {
-            fetch('http://localhost:5000/api/addbook/', {
+            fetch('http://localhost:5000/api/store/addbook', {
               method: "POST",
               headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"
               },
               body: JSON.stringify(formData)
-            });
+            })
+                .then(res => console.log(res))
+                .catch(e => console.log(e));
 
             this.props.history.push('/dashboard'); 
         
@@ -116,7 +120,7 @@ class AddBooks extends Component {
                     </div>
                     <form onSubmit={this.handleSubmit}>
                         <div style={display}>
-                            <input style= {{textAlign:'center'}} name= "image" type="file" onChange={(evt) => this.handleImage(evt)}/>
+                            <input style= {{textAlign:'center'}} ref="image" id="image" name= "image" type="file" onChange={(evt) => this.handleImage(evt)}/>
                         <br></br>
                         </div>
                         {/* <label htmlFor="book_id">BookID</label>

@@ -1,10 +1,10 @@
 const express = require("express");
+var mongoose = require('mongoose');
 const router = express.Router();
 
 // Load User model
 const Store = require("../../models/Store");
 const Logs = require("../../models/Logs");
-const AddBook = require("../../models/AddBook");
 
 // @route GET api/store
 // @get all books in store
@@ -110,61 +110,62 @@ router.get('/search', (req, res, next) => {
     .limit(50);
 });
 
-// API Endpoint: http://localhost:5000/api/store/:bookid
+// API Endpoint: http://localhost:5000/api/store/addbook
 // NOTE: THIS SAVES THE BOOK TO THE MAIN MONGODB BOOK COLLECTION.
-router.post('/:bookID', (req, res, next) => {
-
-    const bookID = req.params.bookID;
+router.post('/addbook', async (req, res, next) => {
     const bookData = req.body;
 
-    Store.findOne({ bookID }).then(store => {
-        // Check if book exists
-        if (store) {
-          const newLogs = new Logs({
-              timestamp: Date.now(),
-              database: "Mongo - Books",
-              method: "POST",
-              userID: null,
-              parameters: "/:bookID - " + bookID + ". Book already exists",
-              response: "404"
-          });
-          newLogs.save();
-          return res.status(404).json({ booknotfound: "Book already exists" });
-        } else {
-            // const newBook = new Store({
-            //     "asin": bookID,
-            //     "title": bookData.title,
-            //     "description": bookData.description,
-            //     "price": bookData.price,
-            //     "imUrl": bookData.imUrl,
-            //     "related": bookData.related,
-            //     "salesRank" : bookData.salesRank,
-            //     "brand" : bookData.brand,
-            //     "categories": bookData.categories
-            // });
-            const newBook = new AddBook({
-                // "asin": bookData.asin,    need to auto generate
-                "token": bookData.token,
-                "title": bookData.title,
-                "description": bookData.description,
-                "price": bookData.price,
-                "image": book.image,
-            });
-            newBook.save()
+    // await Store.findOneAndDelete({'title': bookData.title}, (e, d) => console.log("book exist"))
+    let exists = await Store.exists({'title': bookData.title})
+
+    if (exists){
+        const newLogs = new Logs({
+            timestamp: Date.now(),
+            database: "Mongo - Books",
+            method: "POST",
+            userID: bookData.token,
+            parameters: "/addbook - Book with title "+bookData.title+" already exists",
+            response: "404"
+        });
+        newLogs.save();
+        return res.status(404).json({ result: "Book already exists" });
+    }
+    const id = new mongoose.Types.ObjectId();
+    const newBook = new Store({
+        "_id": id,
+        "asin": id.toString(),
+        "token": bookData.token,
+        "title": bookData.title,
+        "description": bookData.description,
+        "price": bookData.price,
+        // "image": book.image, # TODO imageURL not actual image data
+    });
+
+    newBook.save()
+        .then((r) => {
             const newLogs = new Logs({
                 timestamp: Date.now(),
                 database: "Mongo - Books",
                 method: "POST",
-                userID: null,
-                parameters: "/:bookID - " + bookID,
+                userID: bookData.token,
+                parameters: "/addbook",
                 response: "200"
             });
             newLogs.save();
-            return res
-              .status(200)
-              .json({ bookData: "success" });
-        }
-    });
+            return res.status(200).json({ result: "success", book: r });
+         })
+        .catch(err => {
+            const newLogs = new Logs({
+                timestamp: Date.now(),
+                database: "Mongo - Books",
+                method: "POST",
+                userID: bookData.token,
+                parameters: "/addbook",
+                response: "500"
+            });
+            newLogs.save();
+            return res.status(500).json(err)
+        })
 });
 
 module.exports = router;

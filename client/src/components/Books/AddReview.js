@@ -13,7 +13,7 @@ class AddReview extends Component {
           book_id: '',
           rating: '',
           date: Date(),
-          token: ''
+          token: '',
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -91,12 +91,12 @@ class AddReview extends Component {
                     </div>
                     <form onSubmit={this.handleSubmit}>
                         <label htmlFor="book_id">BookID</label>
-                        <input ref="bookid" onChange={(evt) => this.handleChange(evt)} id="book_id" name="book_id" type="text" />
+                        <input ref="bookid" value={this.state.book_id} onChange={(evt) => this.handleChange(evt)} id="book_id" name="book_id" type="text" />
                         <label htmlFor="reivew">Review</label>
                             <textarea ref="review" name="reivew" type="text" onChange={(evt) => this.handleReview(evt)}/>
                         <label htmlFor="rating">Rating</label>
                             <input ref="rating" id="rating" name="rating" type="text" onChange={(evt) => this.handleRating(evt)}/>
-                        {/* <input ref="date" type="hidden" id="date" name="date" value={this.state.date}></input> */}
+                        <input ref="date" type="hidden" id="date" name="date" value={this.state.date}></input>
                             <input ref="token" type="hidden" id="token" name="token" value={this.state.token}></input>
                         <button class="btn draw-border">Review Me</button>
                     </form>

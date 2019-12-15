@@ -115,7 +115,6 @@ class Button extends React.Component {
     }
 }
 
-
 class CardHeader extends React.Component {
     render() {
         const { imUrl, asin } = this.props;

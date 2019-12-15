@@ -115,11 +115,10 @@ def copy_image_to_account(ec2, img_name, source_region):
     return response["ImageId"]
 
 # create a security group with associated permissions
-def create_security_group(ec2, vpc_id, security_group_name, description):
+def create_security_group(ec2, security_group_name, description):
     try:
         response = ec2.create_security_group(GroupName=security_group_name,
-                                            Description=description,
-                                            VpcId=vpc_id)
+                                            Description=description)
         security_group_id = response['GroupId']
         print('Security Group Created %s in vpc %s.' % (security_group_id, vpc_id))
 
@@ -234,11 +233,10 @@ def create_security_group(ec2, vpc_id, security_group_name, description):
         print(e)
 
 # create a security group with associated permissions for MongoDB
-def create_mongo_security_group(ec2, vpc_id, security_group_name, description):
+def create_mongo_security_group(ec2, security_group_name, description):
     try:
         response = ec2.create_security_group(GroupName=security_group_name,
-                                            Description=description,
-                                            VpcId=vpc_id)
+                                            Description=description)
         security_group_id = response['GroupId']
         print('Security Group Created %s in vpc %s.' % (security_group_id, vpc_id))
 
@@ -268,11 +266,10 @@ def create_mongo_security_group(ec2, vpc_id, security_group_name, description):
         print(e)
 
 # create a security group with associated permissions for MySQL
-def create_mysql_security_group(ec2, vpc_id, security_group_name, description):
+def create_mysql_security_group(ec2, security_group_name, description):
     try:
         response = ec2.create_security_group(GroupName=security_group_name,
-                                            Description=description,
-                                            VpcId=vpc_id)
+                                            Description=description)
         security_group_id = response['GroupId']
         print('Security Group Created %s in vpc %s.' % (security_group_id, vpc_id))
 
@@ -302,11 +299,10 @@ def create_mysql_security_group(ec2, vpc_id, security_group_name, description):
         print(e)
 
 # create a security group with associated permissions for NodeJS
-def create_nodejs_security_group(ec2, vpc_id, security_group_name, description):
+def create_nodejs_security_group(ec2, security_group_name, description):
     try:
         response = ec2.create_security_group(GroupName=security_group_name,
-                                            Description=description,
-                                            VpcId=vpc_id)
+                                            Description=description)
         security_group_id = response['GroupId']
         print('Security Group Created %s in vpc %s.' % (security_group_id, vpc_id))
 
@@ -392,9 +388,10 @@ def get_vpc_info(ec2, key):
     return vpc_info
 
 # deploy an instance with an input image_id and return the IP addresses 
-def deploy_instance(ec2, image_id, ip_filename, dns_filename, private_ip_filename, private_key_file, instance_size):
+def deploy_instance(ec2, image_id, ip_filename, dns_filename, private_ip_filename, private_key_file, instance_size, security_group_id):
+    security_group_id = get_security_groupid(ec2, security_group_id)
     private_key = private_key_file.split('.')[0]
-    response = ec2.run_instances(ImageId=image_id, MinCount=1, MaxCount=1, InstanceType=instance_size, SecurityGroupIds=[get_security_groupid(ec2, "AUTOMATED_MONGO")], KeyName=private_key,
+    response = ec2.run_instances(ImageId=image_id, MinCount=1, MaxCount=1, InstanceType=instance_size, SecurityGroupIds=[security_group_id], KeyName=private_key,
         TagSpecifications=[
         {
             'ResourceType': 'instance',
@@ -440,7 +437,7 @@ def allocate_ip_address(ec2, instance_id):
 
 def deploy_mysql(ec2, private_key_file, instance_size):
     empty_img = get_image(ec2, "clean_instance")
-    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'mysql_ipaddress.txt', 'mysql_dns.txt', 'mysql_privateipaddress.txt', private_key_file, instance_size)
+    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'mysql_ipaddress.txt', 'mysql_dns.txt', 'mysql_privateipaddress.txt', private_key_file, instance_size, "AUTOMATED_MYSQL")
     protect_key_file = "chmod 400 " + private_key_file
     os.system(protect_key_file)
     permissions_script = "chmod 755 deployment_mysql.sh"
@@ -453,7 +450,7 @@ def deploy_mysql(ec2, private_key_file, instance_size):
 
 def deploy_mongodb(ec2, private_key_file, instance_size):
     empty_img = get_image(ec2, "clean_instance")
-    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'mongodb_ipaddress.txt', 'mongodb_dns.txt', 'mongodb_privateipaddress.txt', private_key_file, instance_size)
+    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'mongodb_ipaddress.txt', 'mongodb_dns.txt', 'mongodb_privateipaddress.txt', private_key_file, instance_size, "AUTOMATED_MONGODB")
     protect_key_file = "chmod 400 " + private_key_file
     os.system(protect_key_file)
     permissions_script = "chmod 755 deployment_mongodb.sh"
@@ -466,7 +463,7 @@ def deploy_mongodb(ec2, private_key_file, instance_size):
 
 def deploy_nodejs(ec2, private_key_file, instance_size):
     empty_img = get_image(ec2, "clean_instance")
-    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'nodejs_ipaddress.txt', 'nodejs_dns.txt', 'nodejs_privateipaddress.txt', private_key_file, instance_size)
+    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'nodejs_ipaddress.txt', 'nodejs_dns.txt', 'nodejs_privateipaddress.txt', private_key_file, instance_size, "AUTOMATED_NODE")
     protect_key_file = "chmod 400 " + private_key_file
     os.system(protect_key_file)
     permissions_script = "chmod 755 deployment_nodejs.sh"
@@ -479,12 +476,12 @@ def deploy_nodejs(ec2, private_key_file, instance_size):
 
 def deploy_hadoop_cluster(ec2, num_nodes, private_key_file, instance_size):
     empty_img = get_image(ec2, "clean_instance")
-    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'hadoop/hadoop_namenode_ipaddress.txt', 'hadoop/hadoop_namenode_dns.txt', 'hadoop/hadoop_namenode_privateipaddress.txt', private_key_file, instance_size)
+    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'hadoop/hadoop_namenode_ipaddress.txt', 'hadoop/hadoop_namenode_dns.txt', 'hadoop/hadoop_namenode_privateipaddress.txt', private_key_file, instance_size, "AUTOMATED_MONGO")
     for i in range(1, num_nodes + 1):
         ipaddress_filename = "hadoop/hadoop_datanode_ipaddress_" + str(i) + ".txt"
         dns_filename = "hadoop/hadoop_datanode_dns_" + str(i) + ".txt"
         private_ipaddress_filename = "hadoop/hadoop_datanode_privateipaddress_" + str(i) + ".txt"
-        deploy_ins = deploy_instance(ec2, empty_img['image_id'], ipaddress_filename, dns_filename, private_ipaddress_filename, private_key_file, instance_size)
+        deploy_ins = deploy_instance(ec2, empty_img['image_id'], ipaddress_filename, dns_filename, private_ipaddress_filename, private_key_file, instance_size, "AUTOMATED_MONGO")
     os.system('zip -r9 hadoop.zip hadoop')
     protect_key_file = "chmod 400 " + private_key_file
     os.system(protect_key_file)
@@ -496,27 +493,28 @@ if __name__ == "__main__":
     user_df = pd.read_csv('credentials.csv')
     user_cred = user_df.iloc[0]
     ec2 = new_session('ec2', user_cred['Access key ID'], user_cred['Secret access key'], sys.argv[4])
-    vpc_id = get_vpc_info(ec2, "VpcId")
-    print("VPC ID: {}".format(str(vpc_id)))
-    try:
-        create_security_group(ec2, vpc_id[0], "AUTOMATED_MONGO", "Security group for automated Mongo")
-    except:
-        delete_security_group(ec2, "AUTOMATED_MONGO")
-        create_security_group(ec2, vpc_id[0], "AUTOMATED_MONGO", "Security group for automated Mongo")
+     # CREATE SECURITY GROUPS
+    create_security_group(ec2, "AUTOMATED_MONGO", "Security group for automated Mongo")
+    create_mysql_security_group(ec2, "AUTOMATED_MYSQL", "Security group for automated MySQL")
+    create_mongo_security_group(ec2, "AUTOMATED_MONGODB", "Security group for automated MongoDB")
+    #create_mongo_security_group(ec2, "AUTOMATED_NODEJS", "Security group for automated NodeJS")
     # CREATE IMAGE
     try:
         save_image(ec2, list(list_ec2_instances(ec2).keys())[0], 'clean_instance', 'clean_instance')
     except:
         print("AMI image already saved. Deploying...")
     # DEPLOY HADOOP/SPARK
-    print(deploy_hadoop_cluster(ec2, int(sys.argv[1]), sys.argv[2], sys.argv[3]))
+    #print(deploy_hadoop_cluster(ec2, int(sys.argv[1]), sys.argv[2], sys.argv[3]))
     # DEPLOY MYSQL
-    print(deploy_mysql(ec2, sys.argv[2], sys.argv[3]))
+    #print(deploy_mysql(ec2, sys.argv[2], sys.argv[3]))
     # DEPLOY MONGODB
-    print(deploy_mongodb(ec2, sys.argv[2], sys.argv[3]))
+    #print(deploy_mongodb(ec2, sys.argv[2], sys.argv[3]))
     # DEPLOY NODEJS
-    print(deploy_nodejs(ec2, sys.argv[2], sys.argv[3]))
+    #print(deploy_nodejs(ec2, sys.argv[2], sys.argv[3]))
 
+
+# vpc_id = get_vpc_info(ec2, "VpcId")
+# print("VPC ID: {}".format(str(vpc_id)))
 
 # DEPLOY MONGODB AND MYSQL
 # empty_img = get_image(ec2, "empty_instance")

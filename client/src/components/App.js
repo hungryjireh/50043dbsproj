@@ -21,7 +21,6 @@ import ListAllReview from "./Review/ListAllReview";
 
 
 
-
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -53,7 +52,7 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route exact path="/getbooks" component={Store} />
               <Route exact path="/addbooks" component={AddBooks} />
-              <Route exact path="/addreview" component={AddReview} />           
+              <Route exact path="/addreview/:asin" component={AddReview} />           
               <Route exact path="/getallreview" component={ListAllReview} />
               <Route exact path="/book/:asin" component={Review} />
               

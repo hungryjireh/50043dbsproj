@@ -60,7 +60,7 @@ class Button extends React.Component {
 
   handleClick(event) {
     const id = event.target.value;
-    console.log(id);
+    console.log('id' + id);
   }
 
   render() {
@@ -70,6 +70,31 @@ class Button extends React.Component {
         <Link to={`/book/${asin}`}>
             <button onClick={this.handleClick} value={asin} className="button button-primary marketplace-button-improve">
               <i className="fa fa-chevron-right"></i> Find out more
+            </button>
+        </Link>
+      </div>
+    )
+  }
+}
+
+class AddReviewLink extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+      const id = event.target.value;
+      console.log(id);
+  }
+
+  render() {
+    const { asin, index } = this.props;
+    return (
+      <div>
+        <Link to={`/addreview/${asin}`}>
+            <button onClick={this.handleClick} value={asin} className="button button-primary marketplace-button-improve">
+                <i className="fa fa-chevron-right"></i> Add Review for this book
             </button>
         </Link>
       </div>
@@ -107,6 +132,7 @@ class CardBody extends React.Component {
             <p className="body-content">{price}</p>
         </div>
         <Button asin={asin} index={index}/>
+        <AddReviewLink asin={asin} index={index} />
       </div>
     )
   }

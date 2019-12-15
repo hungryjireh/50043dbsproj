@@ -10,14 +10,14 @@ class MenuLinks extends Component {
     return (
         <div className={this.props.menuStatus} style={divStyle} className='menu'>
           <ul>
-            <li><a href='https://singapore.hackjunction.com/register' onClick={this.props.menuToggle}>Home</a></li>
-            <li><a href='https://singapore.hackjunction.com/tracks' onClick={this.props.menuToggle}>About</a></li>
-            <li><a href='https://singapore.hackjunction.com/schedule' onClick={this.props.menuToggle}>Team</a></li>
-            <li><a href='https://singapore.hackjunction.com/venue' onClick={this.props.menuToggle}>Contact</a></li>
+            <li><a href='#' onClick={this.props.menuToggle}>Home</a></li>
+            <li><a href='#' onClick={this.props.menuToggle}>About</a></li>
+            <li><a href='#' onClick={this.props.menuToggle}>Team</a></li>
+            <li><a href='#' onClick={this.props.menuToggle}>Contact</a></li>
             <li><a href="/login"><span class="btn btn-default btn-lg">Login</span></a></li>
             <li><a href="/register"><span class="btn btn-default btn-lg">Register</span></a></li>
           </ul>
-        </div>
+        </div> 
     )
   }
 }

@@ -46,7 +46,6 @@ class Review extends Component {
                 .keys(review_content)
                 .map(key => <Card key={key} index={key} details={review_content[key]}/>)}
               </div>
-              <AddReview />
             </div>
         )
     }

@@ -17,7 +17,7 @@ class MenuLinks extends Component {
             <li><a href="/login"><span class="btn btn-default btn-lg">Login</span></a></li>
             <li><a href="/register"><span class="btn btn-default btn-lg">Register</span></a></li>
           </ul>
-        </div>
+        </div> 
     )
   }
 }

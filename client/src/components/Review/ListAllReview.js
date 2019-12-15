@@ -11,7 +11,7 @@ const divStyle = {
     padding: '2rem'
 }
 
-class trstAllReview extends Component {
+class ListAllReview extends Component {
 
     constructor(props) {
         super(props);
@@ -77,8 +77,4 @@ class Itemarray extends React.Component {
     }
 }
   
-<<<<<<< HEAD
 export default ListAllReview;
-=======
-export default trstAllReview;
->>>>>>> c1da2350c8c350411c6048b7cc3631016cbdf7d3

@@ -41,8 +41,7 @@ class AddBooks extends Component {
         const { handle } = this.props.match.params
 
         api.get('/api/review/'+this.state.asin)
-            .then(data => data.json())
-            .then(res => this.setState({book_id: res}));
+            .then(res => this.setState({book_id: res.data}));
     };
 
     componentDidMount() {
@@ -65,8 +64,6 @@ class AddBooks extends Component {
         for (const field in this.refs) {
           formData[field] = this.refs[field].value;
         }
-        console.log(formData)
-        console.log(this.state)
 
         try {
             api.post("/api/store/addbook",
@@ -75,9 +72,12 @@ class AddBooks extends Component {
                         "Accept": "application/json",
                         "Content-Type": "application/json"
             }})
-                .then(res => console.log(res))
-                .catch(e => console.log(e));
-            this.props.history.push('/dashboard');
+                .then(res => {
+                    console.log(res);
+                    this.props.history.push('/dashboard');
+                })
+                .catch(e => console.log(e, e.response.data));
+
 
           } catch (error) {
             console.error(error);

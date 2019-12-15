@@ -23,8 +23,7 @@ class ListAllReview extends Component {
 
     componentDidMount() {
         api.get("/api/review/getallreview")
-          .then(data => data.json())
-          .then(res => this.setState({reviews: res}));
+          .then(res => this.setState({reviews: res.data.data}));
     }
 
     render() {

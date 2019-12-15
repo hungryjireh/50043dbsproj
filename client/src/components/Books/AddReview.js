@@ -24,8 +24,10 @@ class AddReview extends Component {
         const { handle } = this.props.match.params
 
         api.get("/api/review/"+this.state.asin)
-            .then(data => data.json())
-            .then(res => this.setState({book_id: res}));
+            .then(res => {
+                console.log("add review", res)
+                this.setState({book_id: res.data})
+            });
     };
 
     componentDidMount() {
@@ -55,7 +57,7 @@ class AddReview extends Component {
                 {headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json"
-                },});
+                }});
 
             this.props.history.push('/dashboard'); 
         

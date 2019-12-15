@@ -20,8 +20,7 @@ class CardMarketplace extends React.Component {
 
   getDataFromDb = () => {
     api.get("/api/store/getbooks")
-      .then(data => data.json())
-      .then(res => this.setState({ posts: res.data }));
+      .then(res => this.setState({ posts: res.data.data }));
   };
 
   render() {

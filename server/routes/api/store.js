@@ -114,7 +114,6 @@ router.get('/search', (req, res, next) => {
 // NOTE: THIS SAVES THE BOOK TO THE MAIN MONGODB BOOK COLLECTION.
 router.post('/addbook', async (req, res, next) => {
     const bookData = req.body;
-
     // await Store.findOneAndDelete({'title': bookData.title}, (e, d) => console.log("book exist"))
     let exists = await Store.exists({'title': bookData.title})
 
@@ -128,7 +127,7 @@ router.post('/addbook', async (req, res, next) => {
             response: "404"
         });
         newLogs.save();
-        return res.status(404).json({ result: "Book already exists" });
+        return res.status(409).json({ result: "Book already exists" });
     }
     const id = new mongoose.Types.ObjectId();
     const newBook = new Store({

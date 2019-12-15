@@ -19,14 +19,12 @@ class Review extends Component {
     
       getDataFromDbReview = () => {
         api.get('/api/review/'+this.state.asin)
-          .then(data => data.json())
-          .then(res => this.setState({review_content: res}));
+          .then(res => this.setState({review_content: res.data}));
       };
 
       getDataFromDbBook = () => {
         api.get('/api/store/book/'+this.state.asin)
-          .then(data => data.json())
-          .then(res => this.setState({book_content: res.data}));
+          .then(res => this.setState({book_content: res.data.data}));
       };
       
     

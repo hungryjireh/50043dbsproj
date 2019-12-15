@@ -5,7 +5,7 @@ const { api: { uri } } = config;
 
 const api = axios.create({
   baseURL: uri,
-  timeout: 2000
+  timeout: 5000
 });
 
 export default api;

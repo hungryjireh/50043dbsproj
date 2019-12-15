@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import './addreview.scss'
 import NavbarTop from '../Nav/Nav'
 import Navbar from '../layout/Navbar'
+import api from "../../utils/api";
 
 
 
@@ -22,7 +23,7 @@ class AddReview extends Component {
     getDataID = () => {
         const { handle } = this.props.match.params
 
-        fetch('http://localhost:5000/api/review/'+this.state.asin)
+        api.get("/api/review/"+this.state.asin)
             .then(data => data.json())
             .then(res => this.setState({book_id: res}));
     };
@@ -49,14 +50,12 @@ class AddReview extends Component {
         console.log(formData)
 
         try {
-            fetch('http://localhost:5000/api/review/'+this.state.book_id, {
-              method: "POST",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify(formData)
-            });
+            api.post("/api/review/"+this.state.book_id,
+                formData,
+                {headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },});
 
             this.props.history.push('/dashboard'); 
         
@@ -67,9 +66,6 @@ class AddReview extends Component {
 
     handleChange(event) {
         this.setState({book_id: event.target.value});
-        // fetch('http://localhost:5000/api/review/book/'+this.state.book_id)
-        //   .then(data => data.json())
-        //   .then(res => console.log(res));
     }
 
     handleReview(event) {

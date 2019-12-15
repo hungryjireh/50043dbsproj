@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from '../layout/Navbar'
 import NavbarTop from '../Nav/Nav'
+import api from "../../utils/api";
 
 const divStyle = {
     height: '100vh',
@@ -10,9 +11,9 @@ const divStyle = {
 }
 
 const uploadImage = {
-    width: '200px', 
-    height: '300px', 
-    objectFit: 'contain', 
+    width: '200px',
+    height: '300px',
+    objectFit: 'contain',
     border: 'None'
 }
 
@@ -39,7 +40,7 @@ class AddBooks extends Component {
     getDataID = () => {
         const { handle } = this.props.match.params
 
-        fetch('http://localhost:5000/api/review/'+this.state.asin)
+        api.get('/api/review/'+this.state.asin)
             .then(data => data.json())
             .then(res => this.setState({book_id: res}));
     };
@@ -68,19 +69,16 @@ class AddBooks extends Component {
         console.log(this.state)
 
         try {
-            fetch('http://localhost:5000/api/store/addbook', {
-              method: "POST",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify(formData)
-            })
+            api.post("/api/store/addbook",
+                formData,
+                {headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+            }})
                 .then(res => console.log(res))
                 .catch(e => console.log(e));
+            this.props.history.push('/dashboard');
 
-            this.props.history.push('/dashboard'); 
-        
           } catch (error) {
             console.error(error);
           }
@@ -88,9 +86,6 @@ class AddBooks extends Component {
 
     handleChange(event) {
         this.setState({book_id: event.target.value});
-        // fetch('http://localhost:5000/api/review/book/'+this.state.book_id)
-        //   .then(data => data.json())
-        //   .then(res => console.log(res));
     }
 
     handleImage(event) {
@@ -114,7 +109,7 @@ class AddBooks extends Component {
             <div>
                 <NavbarTop />
                 <Navbar />
-                <div style={divStyle} className="addBooks"> 
+                <div style={divStyle} className="addBooks">
                     <div style={{textAlign:'center'}}>
                         <img style={uploadImage} src={this.state.image}/>
                     </div>

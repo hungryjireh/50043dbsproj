@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AddReview from "./AddReview";
+import api from "../../utils/api";
 
 class Review extends Component {
     constructor(props) {
@@ -17,13 +18,13 @@ class Review extends Component {
       };
     
       getDataFromDbReview = () => {
-        fetch('http://localhost:5000/api/review/'+this.state.asin)
+        api.get('/api/review/'+this.state.asin)
           .then(data => data.json())
           .then(res => this.setState({review_content: res}));
       };
 
       getDataFromDbBook = () => {
-        fetch('http://localhost:5000/api/store/book/'+this.state.asin)
+        api.get('/api/store/book/'+this.state.asin)
           .then(data => data.json())
           .then(res => this.setState({book_content: res.data}));
       };

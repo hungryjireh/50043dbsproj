@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './card.scss'
+import api from "../../utils/api";
 
 
 const PostsData = [
@@ -58,7 +59,7 @@ class CardDesign extends React.Component {
   };
 
   getDataFromDb = () => {
-      fetch("http://localhost:5000/api/store/getbooks")
+      api.get("/api/store/getbooks")
           .then(data => data.json())
           .then(res => this.setState({ posts: res.data }));
   };

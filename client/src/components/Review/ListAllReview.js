@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TopNav from '../Nav/Nav';
 import SideNav from '../layout/Navbar'
 import './ListAllReview.css'
+import api from "../../utils/api";
 
 const divStyle = {
     height: '100vh',
@@ -21,7 +22,7 @@ class trstAllReview extends Component {
     };
 
     componentDidMount() {
-        fetch('http://localhost:5000/api/review/getallreview')
+        api.get("/api/review/getallreview")
           .then(data => data.json())
           .then(res => this.setState({reviews: res}));
     }

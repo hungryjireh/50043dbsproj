@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import TopNav from '../Nav/Nav';
 import SideNav from '../layout/Navbar'
+import './ListAllReview.css'
 
 const divStyle = {
     height: '100vh',
@@ -10,19 +11,19 @@ const divStyle = {
     padding: '2rem'
 }
 
-class ListAllReview extends Component {
+class trstAllReview extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-          reviews: {}
+          reviews: []
         }
     };
 
     componentDidMount() {
         fetch('http://localhost:5000/api/review/getallreview')
           .then(data => data.json())
-          .then(res => this.setState({ reviews: res.data }));
+          .then(res => this.setState({reviews: res}));
     }
 
     render() {
@@ -32,38 +33,48 @@ class ListAllReview extends Component {
             <TopNav />
             <SideNav />
             <div style={divStyle}>
-                <p>helloworld</p>
-                {
-                Object
-                .keys(this.state.reviews)
-                .map(key => <ItemListarray key={key} index={key} details={this.state.reviews[key]}/>)
-                }
+                <table>
+                    <tr>
+                        <th colspan="8">List of reviews added</th>
+                    </tr>
+                    <tr>
+                        <td>Asin</td>
+                        <td>Helpful</td>
+                        <td>Overall</td>
+                        <td>ReivewText</td>
+                        <td>ReivewTime</td>
+                        <td>ReivewerID</td>
+                        <td>ReivewerName</td>
+                        <td>Summary</td>
+                    </tr>
+                    {
+                    Object
+                    .keys(this.state.reviews)
+                    .map(key => <Itemarray key={key} index={key} details={this.state.reviews[key]}/>)
+                    }
+                </table>
             </div>
         </div>
       );
     }
   }
 
-class ItemListarray extends React.Component {
+class Itemarray extends React.Component {
     render() {
         const {asin, helpful, overall, reviewText, reviewTime, reviewerID, reviewerName, summary} = this.props.details;
         return (
-            <div>
-                <ul>
-                    <li>item 3</li>
-                    <li>{asin}</li>
-                    <li>{helpful}</li>
-                    <li>{overall}</li>
-                    <li>{reviewText}</li>
-                    <li>{reviewTime}</li>
-                    <li>{reviewerID}</li>
-                    <li>{reviewerName}</li>
-                    <li>{summary}</li>
-                </ul>
-            </div>
+            <tr>
+                <td>{asin}</td>
+                <td>{helpful}</td>
+                <td>{overall}</td>
+                <td>{reviewText}</td>
+                <td>{reviewTime}</td>
+                <td>{reviewerID}</td>
+                <td>{reviewerName}</td>
+                <td>{summary}</td>
+            </tr>
         )
     }
 }
   
-  
-  export default ListAllReview;
+export default trstAllReview;

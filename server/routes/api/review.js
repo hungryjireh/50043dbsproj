@@ -25,6 +25,7 @@ router.get('/getallreview', (req, res, next) => {
             console.log(error)
         }else{
             res.send(JSON.stringify(results));
+            console.log('results from backend' + JSON.stringify(results))
         }
     });
 });

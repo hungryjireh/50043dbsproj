@@ -104,7 +104,19 @@ router.post("/login", (req, res) => {
   const password = req.body.password;
 
   // Find user by email
-  User.findOne({ email }).then(user => {
+  User.findOne({ email }, (err, user) => {
+    if (err) {
+        const newLogs = new Logs({
+            timestamp: Date.now(),
+            database: "Mongo - Users",
+            method: "POST",
+            userID: null,
+            parameters: "/login - error",
+            response: "400"
+        });
+        newLogs.save();
+        return res.status(500).json({success: false, error: err});
+    }
     // Check if user exists
     if (!user) {
       const newLogs = new Logs({
@@ -146,7 +158,7 @@ router.post("/login", (req, res) => {
             expiresIn: 31556926 // 1 year in seconds
           },
           (err, token) => {
-            res.json({
+            return res.json({
               success: true,
               token: "Bearer " + token
             });

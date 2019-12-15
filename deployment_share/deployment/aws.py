@@ -120,7 +120,7 @@ def create_security_group(ec2, security_group_name, description):
         response = ec2.create_security_group(GroupName=security_group_name,
                                             Description=description)
         security_group_id = response['GroupId']
-        print('Security Group Created %s in vpc %s.' % (security_group_id, vpc_id))
+        print('Security Group Created %s.' % (security_group_id))
 
         data = ec2.authorize_security_group_ingress(
             GroupId=security_group_id,
@@ -238,7 +238,7 @@ def create_mongo_security_group(ec2, security_group_name, description):
         response = ec2.create_security_group(GroupName=security_group_name,
                                             Description=description)
         security_group_id = response['GroupId']
-        print('Security Group Created %s in vpc %s.' % (security_group_id, vpc_id))
+        print('Security Group Created %s.' % (security_group_id))
 
         data = ec2.authorize_security_group_ingress(
             GroupId=security_group_id,
@@ -271,7 +271,7 @@ def create_mysql_security_group(ec2, security_group_name, description):
         response = ec2.create_security_group(GroupName=security_group_name,
                                             Description=description)
         security_group_id = response['GroupId']
-        print('Security Group Created %s in vpc %s.' % (security_group_id, vpc_id))
+        print('Security Group Created %s.' % (security_group_id))
 
         data = ec2.authorize_security_group_ingress(
             GroupId=security_group_id,
@@ -304,11 +304,15 @@ def create_nodejs_security_group(ec2, security_group_name, description):
         response = ec2.create_security_group(GroupName=security_group_name,
                                             Description=description)
         security_group_id = response['GroupId']
-        print('Security Group Created %s in vpc %s.' % (security_group_id, vpc_id))
+        print('Security Group Created %s' % (security_group_id))
 
         data = ec2.authorize_security_group_ingress(
             GroupId=security_group_id,
             IpPermissions=[
+                {'IpProtocol': 'tcp',
+                'FromPort': 5000,
+                'ToPort': 5000,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
                  {'IpProtocol': 'tcp',
                 'FromPort': 80,
                 'ToPort': 80,
@@ -463,7 +467,7 @@ def deploy_mongodb(ec2, private_key_file, instance_size):
 
 def deploy_nodejs(ec2, private_key_file, instance_size):
     empty_img = get_image(ec2, "clean_instance")
-    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'nodejs_ipaddress.txt', 'nodejs_dns.txt', 'nodejs_privateipaddress.txt', private_key_file, instance_size, "AUTOMATED_NODE")
+    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'nodejs_ipaddress.txt', 'nodejs_dns.txt', 'nodejs_privateipaddress.txt', private_key_file, instance_size, "AUTOMATED_NODEJS")
     protect_key_file = "chmod 400 " + private_key_file
     os.system(protect_key_file)
     permissions_script = "chmod 755 deployment_nodejs.sh"
@@ -497,7 +501,7 @@ if __name__ == "__main__":
     create_security_group(ec2, "AUTOMATED_MONGO", "Security group for automated Mongo")
     create_mysql_security_group(ec2, "AUTOMATED_MYSQL", "Security group for automated MySQL")
     create_mongo_security_group(ec2, "AUTOMATED_MONGODB", "Security group for automated MongoDB")
-    #create_mongo_security_group(ec2, "AUTOMATED_NODEJS", "Security group for automated NodeJS")
+    create_nodejs_security_group(ec2, "AUTOMATED_NODEJS", "Security group for automated NodeJS")
     # CREATE IMAGE
     try:
         save_image(ec2, list(list_ec2_instances(ec2).keys())[0], 'clean_instance', 'clean_instance')
@@ -510,7 +514,7 @@ if __name__ == "__main__":
     # DEPLOY MONGODB
     #print(deploy_mongodb(ec2, sys.argv[2], sys.argv[3]))
     # DEPLOY NODEJS
-    #print(deploy_nodejs(ec2, sys.argv[2], sys.argv[3]))
+    print(deploy_nodejs(ec2, sys.argv[2], sys.argv[3]))
 
 
 # vpc_id = get_vpc_info(ec2, "VpcId")

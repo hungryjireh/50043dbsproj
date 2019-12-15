@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import './Navbar.css'
 import Man from '../../images/man.jpeg'
 import Admin from '../../images/admin.png'
@@ -13,6 +13,7 @@ class Navbar extends Component {
   onLogoutClick = e => {
     e.preventDefault();
     this.props.logoutUser();
+    window.location.href='http://localhost:3000/'
   };
 
   render() {
@@ -59,6 +60,7 @@ class Navbar extends Component {
         <Link to={'/getbooks'}><span class="icon-text">Get Books</span></Link>
         <Link to={'/addbooks'}><span class="icon-text">Add Books</span></Link>
         <Link to={'/addreview'}><span class="icon-text">Add Review</span></Link>
+        <Link to={'/getallreview'}><span class="icon-text">List All Review</span></Link>
         <a href="#"><span class="icon-text">Settings</span></a>
         <button
               style={{

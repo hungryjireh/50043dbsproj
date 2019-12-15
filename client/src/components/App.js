@@ -16,6 +16,8 @@ import Store from "./card/card-marketplace";
 import Review from "./Books/Review";
 import AddReview from "./Books/AddReview";
 import AddBooks from "./Books/AddBooks";
+import ListAllReview from "./Review/ListAllReview";
+
 
 
 
@@ -51,10 +53,10 @@ class App extends Component {
               <Route exact path="/login" component={Login} />
               <Route exact path="/getbooks" component={Store} />
               <Route exact path="/addbooks" component={AddBooks} />
-              <Route exact path="/addreview" component={AddReview} />
+              <Route exact path="/addreview" component={AddReview} />           
+              <Route exact path="/getallreview" component={ListAllReview} />
               <Route exact path="/book/:asin" component={Review} />
-
-
+              
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>
           </div>

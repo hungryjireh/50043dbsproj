@@ -18,8 +18,8 @@ import { SQLconnection } from '../../config/database'
     // "unixReviewTime": { type: Number},  //timestamp
 
 
-// API Endpoint: http://localhost:5000/api/review/allreviews
-router.get('/allreviews', (req, res, next) => {
+// API Endpoint: http://localhost:5000/api/review/getallreview
+router.get('/getallreview', (req, res, next) => {
     SQLconnection.query('SELECT * FROM Kindle LIMIT 20;', function (error, results ) {
         if (error){
             console.log(error)

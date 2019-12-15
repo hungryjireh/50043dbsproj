@@ -27,6 +27,8 @@ ssh -o StrictHostKeyChecking=no -tt -i $2 ec2-user@${NAMENODE_DNS} << EOF
     sudo yum install python3-pip -y
     python3 -m pip install --upgrade pip setuptools wheel --user
     python3 -m pip install --user pandas
+    python3 -m pip install --user numpy
+    python3 -m pip install --user nltk
     python3 -m pip install --user pyspark
     chmod 755 hadoop_namenode_setup.sh
     ./hadoop_namenode_setup.sh "$1" "$2"
@@ -59,6 +61,8 @@ EOF
         python3 -m pip install --upgrade pip setuptools wheel --user
         python3 -m pip install --user pandas
         python3 -m pip install --user pyspark
+        python3 -m pip install --user numpy
+        python3 -m pip install --user nltk
         chmod 755 hadoop_datanode_setup.sh
         ./hadoop_datanode_setup.sh "$1"
         chmod 755 spark_setup.sh

@@ -508,11 +508,11 @@ if __name__ == "__main__":
     except:
         print("AMI image already saved. Deploying...")
     # DEPLOY HADOOP/SPARK
-    #print(deploy_hadoop_cluster(ec2, int(sys.argv[1]), sys.argv[2], sys.argv[3]))
+    print(deploy_hadoop_cluster(ec2, int(sys.argv[1]), sys.argv[2], sys.argv[3]))
     # DEPLOY MYSQL
-    #print(deploy_mysql(ec2, sys.argv[2], sys.argv[3]))
+    print(deploy_mysql(ec2, sys.argv[2], sys.argv[3]))
     # DEPLOY MONGODB
-    #print(deploy_mongodb(ec2, sys.argv[2], sys.argv[3]))
+    print(deploy_mongodb(ec2, sys.argv[2], sys.argv[3]))
     # DEPLOY NODEJS
     print(deploy_nodejs(ec2, sys.argv[2], sys.argv[3]))
 

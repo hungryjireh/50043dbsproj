@@ -1,12 +1,14 @@
 #!/bin/sh
 echo "Hello I'm gonna deploy your webapp to an Amazon EC2 instance!"
 
+# Declaring variables via text files
 NODEJS_DNS=$(cat "nodejs_dns.txt")
 MYSQL_DNS=$(cat "mysql_dns.txt")
 MONGODB_DNS=$(cat "mongodb_dns.txt")
 
 GITHUB_URL="https://github.com/hungryjireh/50043dbsproj.git"
 
+# Changing environment file for Linux
 ssh -o StrictHostKeyChecking=no -tt -i $1 ec2-user@${NODEJS_DNS} << EOF
     echo "Changing environment file..."
     echo "LANG=en_US.UTF-8" > environment
@@ -29,6 +31,7 @@ ssh -o StrictHostKeyChecking=no -tt -i $1 ec2-user@${NODEJS_DNS} << EOF
 	git clone ${GITHUB_URL}
 	echo "Installing dependencies...\n"
 	cd 50043dbsproj
+	# Replacing variables in text files with predefined variables
 	sed -i "s/<mysql_dns>/${MYSQL_DNS}/g" .env
 	sed -i "s/<mongodb_dns>/${MONGODB_DNS}/g" .env
 	sed -i "s/<nodejs_dns>/${NODEJS_DNS}/g" .env

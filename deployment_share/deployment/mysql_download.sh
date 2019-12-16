@@ -1,5 +1,6 @@
 MYSQL_DNS=$(cat "mysql_dns.txt")
 
+# export .csv from MySQL
 ssh -o StrictHostKeyChecking=no -tt -i $1 ec2-user@${MYSQL_DNS} << EOF
     sudo mysql -u root -D dbs_proj
     SELECT 'asin','helpful','overall','reviewText','reviewTime','reviewerID','reviewerName','summary'
@@ -12,5 +13,6 @@ ssh -o StrictHostKeyChecking=no -tt -i $1 ec2-user@${MYSQL_DNS} << EOF
     exit
 EOF
 
+# copy .csv to namenode instance
 scp -i $1 ec2-user@${MYSQL_DNS}:/home/ec2-user/mysql_download.csv mysql_download.csv
 

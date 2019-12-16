@@ -2,7 +2,8 @@
 
 1. Follow instructions on https://stackabuse.com/automating-aws-ec2-management-with-python-and-boto3/ to obtain credentials.csv. This should be placed in deployment_share/deployment.
 2. Create an empty AWS instance (settings: t2.medium, no security groups, us-east-1). Make sure you obtain your private key file (ie. key.pem). Place your private key file in deployment_share/deployment.
-3. Change directory to deployment_share/deployment and run "python3 aws.py <number_of_nodes> <private_key.pem> <instance_size> <availability-region>" (values are optimised for t2.medium instance size)  
+3. Create an empty instance (Amazon Linux 2 AMI (HVM), SSD Volume Type - ami-00068cd7555f543d5 (64-bit x86) / ami-035240afa793cddbb (64-bit Arm))
+4. Change directory to deployment_share/deployment and run "python3 aws.py <number_of_nodes> <private_key.pem> <instance_size> <availability-region>" (values are optimised for t2.medium instance size)  
 eg. python3 aws.py 2 50043_new.pem t2.medium us-east-1  
 eg. python3 aws.py 4 50043_new.pem t2.medium us-east-1  
 eg. python3 aws.py 8 50043_new.pem t2.medium us-east-1  

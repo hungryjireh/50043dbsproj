@@ -6,6 +6,7 @@ import winston from 'winston';
 import review from './routes/api/review'
 import users from './routes/api/users'
 import store from './routes/api/store'
+import logs from './routes/api/logs'
 
 require('dotenv').config();
 
@@ -48,6 +49,7 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 app.use("/api/store", store);
 app.use("/api/review", review);
+app.use("/api/logs", logs);
 
 // Handles any requests that don't match the ones above
 app.get('/*', function(req, res) {

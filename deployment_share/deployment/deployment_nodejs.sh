@@ -7,7 +7,7 @@ MONGODB_DNS=$(cat "mongodb_dns.txt")
 
 GITHUB_URL="https://github.com/hungryjireh/50043dbsproj.git"
 
-ssh -o StrictHostKeyChecking=no -tt -i $1 ec2-user@${MONGODB_DNS} << EOF
+ssh -o StrictHostKeyChecking=no -tt -i $1 ec2-user@${NODEJS_DNS} << EOF
     echo "Changing environment file..."
     echo "LANG=en_US.UTF-8" > environment
     echo "" >> environment

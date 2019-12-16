@@ -29,6 +29,7 @@ MYSQL_UPDATE=$(expect -c "
     expect \"mysql>\"
     send \"create user 'test' identified by 'password';\r\"
     expect \"mysql>\"
+    # grant all permissions to user test
     send \"grant all on dbs_proj.* to 'test';\r\"
     expect \"mysql>\"
     send \"FLUSH PRIVILEGES;\r\"

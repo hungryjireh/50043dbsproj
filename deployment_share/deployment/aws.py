@@ -392,10 +392,10 @@ def get_vpc_info(ec2, key):
     return vpc_info
 
 # deploy an instance with an input image_id and return the IP addresses 
-def deploy_instance(ec2, image_id, ip_filename, dns_filename, private_ip_filename, private_key_file, instance_size, security_group_id):
+def deploy_instance(ec2, ip_filename, dns_filename, private_ip_filename, private_key_file, instance_size, security_group_id):
     security_group_id = get_security_groupid(ec2, security_group_id)
     private_key = private_key_file.split('.')[0]
-    response = ec2.run_instances(ImageId=image_id, MinCount=1, MaxCount=1, InstanceType=instance_size, SecurityGroupIds=[security_group_id], KeyName=private_key,
+    response = ec2.run_instances(ImageId="ami-00068cd7555f543d5", MinCount=1, MaxCount=1, InstanceType=instance_size, SecurityGroupIds=[security_group_id], KeyName=private_key,
         TagSpecifications=[
         {
             'ResourceType': 'instance',
@@ -404,7 +404,7 @@ def deploy_instance(ec2, image_id, ip_filename, dns_filename, private_ip_filenam
             ]
         },
     ])
-    print("{}: Deploying image as instance {}".format(image_id, response['Instances'][0]['InstanceId']))
+    print("Deploying image as instance {}".format(response['Instances'][0]['InstanceId']))
     ip_addresses = get_ip_addresses(ec2, response['Instances'][0]['InstanceId'], ip_filename, dns_filename, private_ip_filename)
     cont = True
     print("Waiting for instance to be running...")
@@ -441,7 +441,7 @@ def allocate_ip_address(ec2, instance_id):
 
 def deploy_mysql(ec2, private_key_file, instance_size):
     empty_img = get_image(ec2, "clean_instance")
-    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'mysql_ipaddress.txt', 'mysql_dns.txt', 'mysql_privateipaddress.txt', private_key_file, instance_size, "AUTOMATED_MYSQL")
+    deploy_ins = deploy_instance(ec2, 'mysql_ipaddress.txt', 'mysql_dns.txt', 'mysql_privateipaddress.txt', private_key_file, instance_size, "AUTOMATED_MYSQL")
     protect_key_file = "chmod 400 " + private_key_file
     os.system(protect_key_file)
     permissions_script = "chmod 755 deployment_mysql.sh"
@@ -454,7 +454,7 @@ def deploy_mysql(ec2, private_key_file, instance_size):
 
 def deploy_mongodb(ec2, private_key_file, instance_size):
     empty_img = get_image(ec2, "clean_instance")
-    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'mongodb_ipaddress.txt', 'mongodb_dns.txt', 'mongodb_privateipaddress.txt', private_key_file, instance_size, "AUTOMATED_MONGODB")
+    deploy_ins = deploy_instance(ec2, 'mongodb_ipaddress.txt', 'mongodb_dns.txt', 'mongodb_privateipaddress.txt', private_key_file, instance_size, "AUTOMATED_MONGODB")
     protect_key_file = "chmod 400 " + private_key_file
     os.system(protect_key_file)
     permissions_script = "chmod 755 deployment_mongodb.sh"
@@ -467,7 +467,7 @@ def deploy_mongodb(ec2, private_key_file, instance_size):
 
 def deploy_nodejs(ec2, private_key_file, instance_size):
     empty_img = get_image(ec2, "clean_instance")
-    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'nodejs_ipaddress.txt', 'nodejs_dns.txt', 'nodejs_privateipaddress.txt', private_key_file, instance_size, "AUTOMATED_NODEJS")
+    deploy_ins = deploy_instance(ec2, 'nodejs_ipaddress.txt', 'nodejs_dns.txt', 'nodejs_privateipaddress.txt', private_key_file, instance_size, "AUTOMATED_NODEJS")
     protect_key_file = "chmod 400 " + private_key_file
     os.system(protect_key_file)
     permissions_script = "chmod 755 deployment_nodejs.sh"
@@ -480,12 +480,12 @@ def deploy_nodejs(ec2, private_key_file, instance_size):
 
 def deploy_hadoop_cluster(ec2, num_nodes, private_key_file, instance_size):
     empty_img = get_image(ec2, "clean_instance")
-    deploy_ins = deploy_instance(ec2, empty_img['image_id'], 'hadoop/hadoop_namenode_ipaddress.txt', 'hadoop/hadoop_namenode_dns.txt', 'hadoop/hadoop_namenode_privateipaddress.txt', private_key_file, instance_size, "AUTOMATED_MONGO")
+    deploy_ins = deploy_instance(ec2, 'hadoop/hadoop_namenode_ipaddress.txt', 'hadoop/hadoop_namenode_dns.txt', 'hadoop/hadoop_namenode_privateipaddress.txt', private_key_file, instance_size, "AUTOMATED_MONGO")
     for i in range(1, num_nodes + 1):
         ipaddress_filename = "hadoop/hadoop_datanode_ipaddress_" + str(i) + ".txt"
         dns_filename = "hadoop/hadoop_datanode_dns_" + str(i) + ".txt"
         private_ipaddress_filename = "hadoop/hadoop_datanode_privateipaddress_" + str(i) + ".txt"
-        deploy_ins = deploy_instance(ec2, empty_img['image_id'], ipaddress_filename, dns_filename, private_ipaddress_filename, private_key_file, instance_size, "AUTOMATED_MONGO")
+        deploy_ins = deploy_instance(ec2, ipaddress_filename, dns_filename, private_ipaddress_filename, private_key_file, instance_size, "AUTOMATED_MONGO")
     os.system('zip -r9 hadoop.zip hadoop')
     protect_key_file = "chmod 400 " + private_key_file
     os.system(protect_key_file)
@@ -502,23 +502,24 @@ if __name__ == "__main__":
     create_mysql_security_group(ec2, "AUTOMATED_MYSQL", "Security group for automated MySQL")
     create_mongo_security_group(ec2, "AUTOMATED_MONGODB", "Security group for automated MongoDB")
     create_nodejs_security_group(ec2, "AUTOMATED_NODEJS", "Security group for automated NodeJS")
-    # CREATE IMAGE
-    try:
-        save_image(ec2, list(list_ec2_instances(ec2).keys())[0], 'clean_instance', 'clean_instance')
-    except:
-        print("AMI image already saved. Deploying...")
-    # DEPLOY HADOOP/SPARK
-    print(deploy_hadoop_cluster(ec2, int(sys.argv[1]), sys.argv[2], sys.argv[3]))
     # DEPLOY MYSQL
     print(deploy_mysql(ec2, sys.argv[2], sys.argv[3]))
     # DEPLOY MONGODB
     print(deploy_mongodb(ec2, sys.argv[2], sys.argv[3]))
     # DEPLOY NODEJS
     print(deploy_nodejs(ec2, sys.argv[2], sys.argv[3]))
+    # DEPLOY HADOOP/SPARK
+    print(deploy_hadoop_cluster(ec2, int(sys.argv[1]), sys.argv[2], sys.argv[3]))
 
 
 # vpc_id = get_vpc_info(ec2, "VpcId")
 # print("VPC ID: {}".format(str(vpc_id)))
+
+# CREATE IMAGE
+    # try:
+    #     save_image(ec2, list(list_ec2_instances(ec2).keys())[0], 'clean_instance', 'clean_instance')
+    # except:
+    #     print("AMI image already saved. Deploying...")
 
 # DEPLOY MONGODB AND MYSQL
 # empty_img = get_image(ec2, "empty_instance")

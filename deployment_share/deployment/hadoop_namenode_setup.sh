@@ -1,17 +1,23 @@
 #!/bin/bash
 
-# NAMENODE
+# NAMENODE SETUP
+
+# obtaining important files for Namenode setup
 unzip hadoop.zip
 rm -rf hadoop.zip
 rm -rf __MACOSX
+# installing Java for hadoop
 yes | sudo yum install java-1.8.0-openjdk-headless
 mkdir server
 cd server
+# Downloading Hadoop
 wget -c https://archive.apache.org/dist/hadoop/common/hadoop-3.1.2/hadoop-3.1.2.tar.gz -O hadoop-3.1.2.tar.gz
 tar xvzf hadoop-3.1.2.tar.gz
+# cleanup files
 rm -rf hadoop-3.1.2.tar.gz
 rm -rf __MACOSX
 
+# installing Expect for inter-node communications setup
 sudo yum install -y expect
 KEYGEN=$(expect -c "
     set timeout 5
@@ -30,6 +36,7 @@ cd ../
 NAMENODE_DNS=$(cat "hadoop/hadoop_namenode_dns.txt")
 NAMENODE_PRIVATE_IP=$(cat "hadoop/hadoop_namenode_privateipaddress.txt")
 
+# configuring hosts file
 echo "" >> hadoop/namenode/hosts
 echo "${NAMENODE_PRIVATE_IP} node-master" >> hadoop/namenode/hosts
 echo "${NAMENODE_PRIVATE_IP}" > hadoop/namenode/masters
@@ -40,23 +47,22 @@ done
 cat hadoop/namenode/hosts
 
 KEYPAIR=$2
-# sed -i "s/<nnode>/${NAMENODE_DNS}/g" hadoop/namenode/config
 for ((i=1;i<=$1;i++)); do 
     pathname="hadoop/hadoop_datanode_dns_$i.txt"
-    # echo ${pathname}
     DATANODE_DNS=$(cat "hadoop/hadoop_datanode_dns_$i.txt")
-    # echo ${DATANODE_DNS}
+    # copying public key to authorised keys
     scp -o StrictHostKeyChecking=no -i ${KEYPAIR} .ssh/id_rsa.pub ec2-user@${DATANODE_DNS}:/home/ec2-user/id_rsa.pub
     echo "${DATANODE_DNS}" >> hadoop/namenode/workers
 done
 cat hadoop/namenode/workers
 
-# # TODO: Namenode: Setup HDFS Properties
+# Replacing variables with predefined variables dynamically
 sed -i "s/<nnode>/${NAMENODE_DNS}/g" hadoop/namenode/mapred-site.xml
 sed -i "s/<nnode>/${NAMENODE_DNS}/g" hadoop/namenode/yarn-site.xml
 sed -i "s/<nnode>/${NAMENODE_DNS}/g" hadoop/namenode/core-site.xml
 sed -i "s/<numnodes>/$1/g" hadoop/namenode/hdfs-site.xml
 
+# move files to corresponding appropriate folders
 sudo mv hadoop/namenode/hadoop-env.sh server/hadoop-3.1.2/etc/hadoop/hadoop-env.sh
 sudo mv hadoop/namenode/hdfs-site.xml server/hadoop-3.1.2/etc/hadoop/hdfs-site.xml
 sudo mv hadoop/namenode/core-site.xml server/hadoop-3.1.2/etc/hadoop/core-site.xml

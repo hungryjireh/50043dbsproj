@@ -1,5 +1,8 @@
+#!/bin/bash
+
 MONGODB_DNS=$(cat "mongodb_dns.txt")
 
+# Configuring environment for Linux machine
 ssh -o StrictHostKeyChecking=no -tt -i $1 ec2-user@${MONGODB_DNS} << EOF
     echo "Changing environment file..."
     echo "LANG=en_US.UTF-8" > environment
@@ -9,6 +12,7 @@ ssh -o StrictHostKeyChecking=no -tt -i $1 ec2-user@${MONGODB_DNS} << EOF
     exit
 EOF
 
+# Copying necessary files into instance for setup
 scp -i $1 get_data_mongodb.sh ec2-user@${MONGODB_DNS}:/home/ec2-user/get_data_mongodb.sh
 scp -i $1 mongodb_setup.sh ec2-user@${MONGODB_DNS}:/home/ec2-user/mongodb_setup.sh
 scp -i $1 mongodb-org-4.2.repo ec2-user@${MONGODB_DNS}:/home/ec2-user/mongodb-org-4.2.repo
@@ -19,8 +23,10 @@ ssh -o StrictHostKeyChecking=no -tt -i $1 ec2-user@${MONGODB_DNS} << EOF
     echo "Updating Linux Machine...\n"
     sudo yum history sync
     yes | sudo yum update
+    # obtaining JSON file to load into MongoDB
     chmod 755 get_data_mongodb.sh
     ./get_data_mongodb.sh
+    # setup MongoDB on empty instance
     chmod 755 mongodb_setup.sh
     ./mongodb_setup.sh
     exit

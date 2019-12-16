@@ -1,4 +1,6 @@
-# Steps to run this Shit
+# Note: For automated deployment instructions, refer to deployment_share/readme.md
+
+# Steps to run this Shit locally
 
 ## Configuration
 

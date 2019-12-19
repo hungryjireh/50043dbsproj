@@ -17,6 +17,7 @@ import Review from "./Books/Review";
 import AddReview from "./Books/AddReview";
 import AddBooks from "./Books/AddBooks";
 import ListAllReview from "./Review/ListAllReview";
+import ViewAllLogs from "./Logs/ViewAllLogs";
 
 
 
@@ -55,6 +56,7 @@ class App extends Component {
               <Route exact path="/addreview/:asin" component={AddReview} />           
               <Route exact path="/getallreview" component={ListAllReview} />
               <Route exact path="/book/:asin" component={Review} />
+              <Route exact path="/getlogs" component={ViewAllLogs} />
               
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>

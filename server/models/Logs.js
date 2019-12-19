@@ -8,7 +8,6 @@ const LogSchema = new Schema({
     "timestamp": { type: Number },
     "database": { type: String },
     "method": { type: String },
-    "endpoint": { type: String },
     "userID" : { type: String},
     "parameters":{ type: Object },
     "response" : { type: Object }

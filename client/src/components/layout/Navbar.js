@@ -61,6 +61,7 @@ class Navbar extends Component {
         <Link to={'/addbooks'}><span class="icon-text">Add Books</span></Link>
         <Link to={'/addreview/BookID'}><span class="icon-text">Add Review</span></Link>
         <Link to={'/getallreview'}><span class="icon-text">List All Review</span></Link>
+        <Link to={'/getlogs'}><span class="icon-text">View all logs</span></Link>
         <a href="#"><span class="icon-text">Settings</span></a>
         <button
               style={{

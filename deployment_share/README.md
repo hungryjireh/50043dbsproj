@@ -1,8 +1,9 @@
 ## INSTRUCTIONS ON AUTOMATIC DEPLOYMENT
 
-1. Follow instructions on https://stackabuse.com/automating-aws-ec2-management-with-python-and-boto3/ to obtain credentials.csv. This should be placed in deployment_share/deployment.
-2. Make sure you obtain your private key file (ie. key.pem). Place your private key file in deployment_share/deployment.
-3. Change directory to deployment_share/deployment and run "python3 aws.py <number_of_nodes> <private_key.pem> <instance_size> <availability-region>" (values are optimised for t2.medium instance size)  
+1. Clone this repository: https://github.com/hungryjireh/50043dbsproj.git
+2. Follow instructions on https://stackabuse.com/automating-aws-ec2-management-with-python-and-boto3/ to obtain credentials.csv. This should be placed in deployment_share/deployment.
+3. Make sure you obtain your private key file (ie. key.pem). Place your private key file in deployment_share/deployment.
+4. Change directory to deployment_share/deployment and run "python3 aws.py <number_of_nodes> <private_key.pem> <instance_size> <availability-region>" (values are optimised for t2.medium instance size)  
 eg. python3 aws.py 2 50043_new.pem t2.medium us-east-1  
 eg. python3 aws.py 4 50043_new.pem t2.medium us-east-1  
 eg. python3 aws.py 8 50043_new.pem t2.medium us-east-1  

@@ -20,6 +20,8 @@ ssh -o StrictHostKeyChecking=no -tt -i $1 ec2-user@${NAMENODE_DNS} << EOF
     # put .csv and .json file into HDFS
     server/hadoop-3.1.2/bin/hdfs dfs -put mysql_download.csv /
     server/hadoop-3.1.2/bin/hdfs dfs -put mongodb_store_download.json /
+    sudo rm -rf mysql_download.csv
+    sudo rm -rf mongodb_store_download.json
     source server/hadoop-3.1.2/.profile
     source server/hadoop-3.1.2/.bashrc
     # Run pearson_correlation.py Python script

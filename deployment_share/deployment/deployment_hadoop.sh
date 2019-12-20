@@ -99,6 +99,5 @@ ssh -o StrictHostKeyChecking=no -tt -i $2 ec2-user@${NAMENODE_DNS} << EOF
     # configuring instance environment
     source server/hadoop-3.1.2/.profile
     source server/hadoop-3.1.2/.bashrc
-    exit
+    logout
 EOF
-exit

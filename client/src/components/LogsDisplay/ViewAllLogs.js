@@ -24,8 +24,7 @@ class ViewAllLogs extends Component {
 
     componentDidMount() {
         api.get("/api/logs/getlogs")
-          .then(res => this.setState({logs: res.data}));
-        console.log(this.state)
+          .then(res => this.setState({logs: res.data.data}));
     }
 
     render() { 
@@ -73,7 +72,7 @@ class Itemarray extends React.Component {
                 <td>{method}</td>
                 <td>{userID}</td>
                 <td>{parameters}</td>
-                <td>{reponse}</td>
+                <td>{response}</td>
             </tr>
         )
     }

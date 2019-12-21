@@ -17,7 +17,7 @@ import Review from "./Books/Review";
 import AddReview from "./Books/AddReview";
 import AddBooks from "./Books/AddBooks";
 import ListAllReview from "./Review/ListAllReview";
-import ViewAllLogs from "./Logs/ViewAllLogs";
+import ViewAllLogs from "./LogsDisplay/ViewAllLogs";
 
 
 

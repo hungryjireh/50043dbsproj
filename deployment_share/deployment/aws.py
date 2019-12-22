@@ -67,6 +67,11 @@ def create_security_group(ec2, security_group_name, description):
                 'FromPort': 80,
                 'ToPort': 80,
                 'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                #NODEJS
+                {'IpProtocol': 'tcp',
+                'FromPort': 5000,
+                'ToPort': 5000,
+                'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
                 {'IpProtocol': 'tcp',
                 'FromPort': 22,
                 'ToPort': 22,
@@ -107,6 +112,11 @@ def update_security_group(ec2, security_group_name, num_nodes):
                         {'IpProtocol': 'icmp',
                         'FromPort': -1,
                         'ToPort': -1,
+                        'IpRanges': [{'CidrIp': '0.0.0.0/0'}]},
+                        #NODEJS
+                        {'IpProtocol': 'tcp',
+                        'FromPort': 5000,
+                        'ToPort': 5000,
                         'IpRanges': [{'CidrIp': '0.0.0.0/0'}]}
                     ]
                 ip_permissions.append(obtain_ip_address('hadoop/hadoop_namenode_privateipaddress.txt'))
@@ -134,7 +144,7 @@ def delete_security_group(ec2, groupname):
             print(response)
 
 # get GroupId of a security group
-def get_security_groupid(ec2, groupname="AUTOMATED_MONGO"):
+def get_security_groupid(ec2, groupname="AUTOMATED_PERMISSIONS"):
     response = ec2.describe_security_groups()['SecurityGroups']
     for item in response:
         if item["GroupName"] == groupname:

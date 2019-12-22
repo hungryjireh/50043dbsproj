@@ -30,6 +30,5 @@ ssh -o StrictHostKeyChecking=no -tt -i $1 ec2-user@${NAMENODE_DNS} << EOF
     python3 tf_idf.py ${NAMENODE_DNS}
     # put output results into HDFS
     server/hadoop-3.1.2/bin/hdfs dfs -put pearson_correlation_results.txt /
-    server/hadoop-3.1.2/bin/hdfs dfs -put tf_idf_results.txt /
     logout
 EOF

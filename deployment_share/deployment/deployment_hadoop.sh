@@ -35,6 +35,7 @@ ssh -o StrictHostKeyChecking=no -tt -i $2 ec2-user@${NAMENODE_DNS} << EOF
     python3 -m pip install --user numpy
     python3 -m pip install --user nltk
     python3 -m pip install --user pyspark
+    python3 -m pip install --user beautifulsoup4
     # Running namenode setup
     chmod 755 hadoop_namenode_setup.sh
     ./hadoop_namenode_setup.sh "$1" "$2"
@@ -74,6 +75,7 @@ EOF
         python3 -m pip install --user pyspark
         python3 -m pip install --user numpy
         python3 -m pip install --user nltk
+        python3 -m pip install --user beautifulsoup4
         chmod 755 hadoop_datanode_setup.sh
         ./hadoop_datanode_setup.sh "$1"
         chmod 755 spark_setup.sh
@@ -96,8 +98,9 @@ ssh -o StrictHostKeyChecking=no -tt -i $2 ec2-user@${NAMENODE_DNS} << EOF
     ./server/hadoop-3.1.2/spark/sbin/start-history-server.sh
     # setting up master and slaves
     ./server/hadoop-3.1.2/spark/sbin/start-all.sh
-    # configuring instance environment
-    source server/hadoop-3.1.2/.profile
-    source server/hadoop-3.1.2/.bashrc
+    # # configuring instance environment
+    # source server/hadoop-3.1.2/.profile
+    # source server/hadoop-3.1.2/.bashrc
     logout
 EOF
+logout

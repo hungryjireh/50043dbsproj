@@ -29,4 +29,8 @@ After setting up all instances, running the analyse_db.sh script will export a .
 
 1. Analysis will be run on the namenode of the Hadoop/Spark cluster. Obtain the private key of the namenode.
 2. Run "python3 analyse_db.py <private_key.pem>"
-3. Results of analysis is saved as pearson_correlation_results.txt and tf_idf_results.txt respectively for question 1 and question 2.
+3. Results of analysis is saved as pearson_correlation_results.txt for question 1.
+4. Results of analysis for Question 2 can be viewed by accessing output folder file parts:  
+- server/hadoop-3.1.2/bin/hdfs dfs -ls /output_tfidf/  
+To print first line of output folder files:  
+- server/hadoop-3.1.2/bin/hdfs dfs -head /output_tfidf/part-00000

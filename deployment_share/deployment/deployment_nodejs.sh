@@ -42,6 +42,6 @@ ssh -o StrictHostKeyChecking=no -tt -i $1 ec2-user@${NODEJS_DNS} << EOF
 	sudo env PATH=$PATH:/home/ec2-user/.nvm/versions/node/v13.3.0/bin/home/ec2user/.nvm/versions/node/v13.3.0/lib/node_modules/pm2/bin/pm2 startup systemd -u ec2-user --hp /home/ec2-user
 	pm2 save
 	
-	echo "App is up and running on ${NODEJS_DNS}:5000! Check back in after 1 minute :)"
+	echo "App is up and running on ${NODEJS_DNS}:5000!"
 	exit
 EOF

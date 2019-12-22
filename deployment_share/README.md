@@ -7,6 +7,7 @@
 eg. python3 aws.py 2 50043_new.pem t2.medium us-east-1  
 eg. python3 aws.py 4 50043_new.pem t2.medium us-east-1  
 eg. python3 aws.py 8 50043_new.pem t2.medium us-east-1  
+5. Note: after starting the master and slaves in the Hadoop cluster, the script will tend to hang for unknown reasons. Note to press "CTRL-C" so as to forcibly terminate the script after launching the Hadoop cluster, and for the script to change security group permissions thereafter.
 
 Take note to configure according to what you wish to deploy (final deployment script triggers all installation).
 
